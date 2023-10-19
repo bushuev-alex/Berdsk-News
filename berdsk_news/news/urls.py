@@ -17,8 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from news.views import MainPage
+from news.views import MainPage, DetailPage
 
 urlpatterns = [
     path("news/", MainPage.as_view(), name='news'),
+    path("news/<int:pk>", DetailPage.as_view(), name='news_by_id'),
 ]

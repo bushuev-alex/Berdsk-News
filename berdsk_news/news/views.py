@@ -15,9 +15,29 @@ from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.conf import settings
 
 from datetime import datetime
+from pprint import pprint
+
+from .models import News, Category
 
 
-class MainPage(View):
+class MainPage(TemplateView):
+    template_name = 'flatpages/index.html'
 
-    def get(self, request):
-        return render(request, 'flatpages/index.html')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["sliced_news"] = News.objects.all().order_by("-id")[:4]
+        context["categories"] = Category.objects.all().order_by("name")
+        context["latest_news"] = News.objects.all().order_by("-id")[:5]
+        return context
+
+
+class DetailPage(TemplateView):
+    template_name = 'flatpages/single-post.html'
+
+    def get_context_data(self, **kwargs):
+        pk = kwargs['pk']
+        context = super().get_context_data(**kwargs)
+        context[f"single_news"] = News.objects.get(id=pk)
+        context["categories"] = Category.objects.all().order_by("name")
+        context["latest_news"] = News.objects.all().order_by("-id")[:5]
+        return context
