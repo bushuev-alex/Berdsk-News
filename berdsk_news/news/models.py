@@ -4,6 +4,8 @@ from django.urls import reverse
 from datetime import datetime
 from django.utils.translation import gettext
 
+from itertools import zip_longest
+
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -88,7 +90,7 @@ class Category(models.Model):
 class Photo(models.Model):
     image = models.ImageField(upload_to='static/img')
     created_at = models.DateTimeField(auto_now_add=True)
-    description = models.CharField(max_length=50, default='')
+    description = models.TextField(default=' ')
 
 
 class News(models.Model):
@@ -117,6 +119,14 @@ class News(models.Model):
     def get_newest_from_each_category(self):
         pass
 
+    def split_by_n(self):
+        return self.text.split('\n')
+
+    def split_by_n_with_photo(self):
+        split_by_n = self.text.split('\r\n\r\n')
+        photo = self.photo.all().order_by('id')
+        return zip_longest(split_by_n, photo, fillvalue=None)
+
     def get_absolute_url(self):
         return reverse('news_detail', args=[str(self.id)])
 
@@ -137,7 +147,7 @@ class NewsPhotos(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     news = models.ForeignKey(News, on_delete=models.CASCADE)
-    # comment = models.OneToOneField('self', on_delete=models.CASCADE)
+    answer = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     text = models.TextField()
     date_time = models.DateTimeField(auto_now_add=True)
     rating = models.IntegerField(default=0)
@@ -154,17 +164,12 @@ class Comment(models.Model):
 class CmntToCmnt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    # comment_to_cmnt = models.ForeignKey('self', on_delete=models.CASCADE, default=' ')
     text = models.TextField()
     date_time = models.DateTimeField(auto_now_add=True)
     rating = models.IntegerField(null=False, default=0)
 
-    def like(self):
-        self.rating += 1
-        self.save()
 
-    def dislike(self):
-        self.rating -= 1
-        self.save()
 
 
 class Advertiser(models.Model):

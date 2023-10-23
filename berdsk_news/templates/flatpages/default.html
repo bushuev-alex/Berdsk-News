@@ -142,17 +142,19 @@
             <h3 class="footer-heading">Последние новости</h3>
 
             <ul class="footer-links footer-blog-entry list-unstyled">
+
               {% for news in latest_news %}
                 <li>
                   <a href="/news/{{ news.pk }}" class="d-flex align-items-center">
                     <img src="{{ news.main_photo.url }}" alt="" class="img-fluid me-3">
                     <div>
-                      <div class="post-meta d-block"><span class="date">{{ news.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.created_at }}</span></div>
+                      <div class="post-meta d-block"><span class="date">{{ news.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.created_at|date:"Y M d D G:i" }}</span></div>
                       <span>{{ news.title }}</span>
                     </div>
                   </a>
                 </li>
               {% endfor %}
+
             </ul>
 
           </div>

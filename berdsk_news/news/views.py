@@ -17,7 +17,7 @@ from django.conf import settings
 from datetime import datetime
 from pprint import pprint
 
-from .models import News, Category
+from .models import News, Category, Comment, CmntToCmnt
 
 
 class MainPage(TemplateView):
@@ -38,6 +38,7 @@ class DetailPage(TemplateView):
         pk = kwargs['pk']
         context = super().get_context_data(**kwargs)
         context[f"single_news"] = News.objects.get(id=pk)
+        context[f"comments"] = Comment.objects.filter(news_id=pk)
         context["categories"] = Category.objects.all().order_by("name")
         context["latest_news"] = News.objects.all().order_by("-id")[:5]
         return context
