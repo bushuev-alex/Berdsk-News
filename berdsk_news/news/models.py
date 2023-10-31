@@ -68,6 +68,7 @@ class Category(models.Model):
                      (technology, 'Технологии'),
                      (ecology, 'Экология'),
                      (roads, 'Дороги и транспорт'),
+                     (helth, 'Здоровье'),
                      (housing, 'ЖКХ'),
                      (young, 'Молодежь'),
                      (pensions, 'Пенсии и пособия'),
@@ -106,18 +107,17 @@ class News(models.Model):
     def like(self):
         self.rating += 1
         self.save()
+        return ''
 
     def dislike(self):
         self.rating -= 1
         self.save()
+        return ''
 
     def preview(self):
         if len(self.text) < 124:
             return self.text[:len(self.text)]
         return self.text[:124] + "..."
-
-    def get_newest_from_each_category(self):
-        pass
 
     def split_by_n(self):
         return self.text.split('\n')
@@ -131,7 +131,7 @@ class News(models.Model):
         return reverse('news_detail', args=[str(self.id)])
 
     def __str__(self):
-        return f"{self.title}: {self.text[:124]}"
+        return f"{self.title}: {self.text[:20]}"
 
 
 class NewsCategory(models.Model):
@@ -155,10 +155,12 @@ class Comment(models.Model):
     def like(self):
         self.rating += 1
         self.save()
+        return ''
 
     def dislike(self):
         self.rating -= 1
         self.save()
+        return ''
 
 
 class CmntToCmnt(models.Model):

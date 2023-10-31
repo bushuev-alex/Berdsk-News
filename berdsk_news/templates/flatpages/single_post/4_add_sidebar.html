@@ -1,0 +1,59 @@
+{% extends 'flatpages/single_post/3_add_comment_form.html' %}
+
+{% block sidebar %}
+
+<!-- ======= Sidebar ======= -->
+<div class="aside-block">
+
+  <ul class="nav nav-pills custom-tab-nav mb-4" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="pills-popular-tab" data-bs-toggle="pill" data-bs-target="#pills-popular" type="button" role="tab" aria-controls="pills-popular" aria-selected="true">Интерес</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-trending-tab" data-bs-toggle="pill" data-bs-target="#pills-trending" type="button" role="tab" aria-controls="pills-trending" aria-selected="false">Тренды</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-latest-tab" data-bs-toggle="pill" data-bs-target="#pills-latest" type="button" role="tab" aria-controls="pills-latest" aria-selected="false">Последние</button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="pills-tabContent">
+
+    <!-- Интерес -->
+    <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
+      {% for number, interesting_news in enum_interesting_news %}
+      <div class="post-entry-1 border-bottom">
+        <div class="post-meta"><span class="date">{{ interesting_news.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ interesting_news.created_at|date:"Y M d D G:i" }}</span></div>
+        <h2 class="mb-2"><a href="{{ interesting_news.id }}">{{ interesting_news.title }}</a></h2>
+        <span class="author mb-3 d-block">{{ interesting_news.author.user.first_name }} {{ interesting_news.author.user.last_name }}</span>
+      </div>
+      {% endfor %}
+    </div> <!-- End Интерес -->
+
+    <!-- Тренды -->
+    <div class="tab-pane fade" id="pills-trending" role="tabpanel" aria-labelledby="pills-trending-tab">
+      {% for number, trending_news in enum_trending_news %}
+      <div class="post-entry-1 border-bottom">
+        <div class="post-meta"><span class="date">{{ trending_news.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ trending_news.created_at|date:"Y M d D G:i" }}</span></div>
+        <h2 class="mb-2"><a href="{{ trending_news.id }}">{{ trending_news.title }}</a></h2>
+        <span class="author mb-3 d-block">{{ trending_news.author.user.first_name }} {{ trending_news.author.user.last_name }}</span>
+      </div>
+      {% endfor %}
+    </div> <!-- End Тренды -->
+
+    <!-- Последние -->
+    <div class="tab-pane fade" id="pills-latest" role="tabpanel" aria-labelledby="pills-latest-tab">
+      {% for number, latest in latest_news %}
+      <div class="post-entry-1 border-bottom">
+        <div class="post-meta"><span class="date">{{ latest.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ latest.created_at|date:"Y M d D G:i" }}</span></div>
+        <h2 class="mb-2"><a href="{{ latest.id }}">{{ latest.title }}</a></h2>
+        <span class="author mb-3 d-block">{{ latest.author.user.first_name }} {{ latest.author.user.last_name }}</span>
+      </div>
+      {% endfor %}
+    </div> <!-- End Последние -->
+
+  </div>
+</div>
+
+
+{% endblock sidebar %}

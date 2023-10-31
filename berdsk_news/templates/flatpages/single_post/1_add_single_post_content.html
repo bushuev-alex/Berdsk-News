@@ -1,0 +1,38 @@
+{% extends 'flatpages/single_post/0_add_intermediate.html' %}
+
+
+{% block single_post_content %}
+<!-- ======= Single Post Content ======= -->
+<div class="single-post">
+  <div class="post-meta">
+    <span class="date">
+
+      {% for category in single_news.category.all %}
+        <a href="{{ category.get_full_name.0 }}">{{ category.get_full_name.0 }},</a>
+      {% endfor %}
+
+    </span>
+    <span class="mx-1">&bullet;</span>
+    <span>{{ single_news.created_at|date:"Y M d D G:i" }}</span>
+  </div>
+  <h1 class="mb-5">{{ single_news.title }}</h1>
+
+<!--              <p><span class="firstcharacter">{{single_news.text.0 }}</span>orem ipsum dolor sit, amet consectetur adipisicing elit. Ratione officia sed, suscipit distinctio, numquam omnis quo fuga ipsam quis inventore voluptatum recusandae culpa, unde doloribus saepe labore alias voluptate expedita? Dicta delectus beatae explicabo odio voluptatibus quas, saepe qui aperiam autem obcaecati, illo et! Incidunt voluptas culpa neque repellat sint, accusamus beatae, cumque autem tempore quisquam quam eligendi harum debitis.</p>-->
+
+  <figure class="my-4">
+    <img src="{{ single_news.main_photo.url }}" alt="" class="img-fluid">
+    <figcaption>{{ single_news.main_photo.image.description }}</figcaption>
+  </figure>
+
+  {% for p, photo in single_news.split_by_n_with_photo %}
+    <p>{{ p }}</p>
+    {% if photo %}
+      <figure class="my-4">
+        <img src="{{ photo.image.url }}" alt="" class="img-fluid">
+        <figcaption>{{ photo.description }}</figcaption>
+      </figure>
+    {% endif %}
+  {% endfor %}
+
+</div><!-- End Single Post Content -->
+{% endblock single_post_content %}

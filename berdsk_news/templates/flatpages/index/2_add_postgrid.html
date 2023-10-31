@@ -1,0 +1,56 @@
+{% extends 'flatpages/index/1_add_slider.html' %}
+
+
+{% block postgrid %}
+    <!-- ======= Post Grid Section ======= -->
+    <section id="posts" class="posts">
+      <div class="container" data-aos="fade-up">
+        <div class="row g-5">
+          <div class="col-lg-4">
+            <div class="post-entry-1 lg">
+              <a href="{{ latest_news.0.pk }}"><img src="{{ latest_news.0.main_photo.url }}" alt="" class="img-fluid"></a>
+              <div class="post-meta"><span class="date">{{ latest_news.0.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ latest_news.0.created_at|date:"Y M d D G:i" }}</span></div>
+              <h2><a href="{{ latest_news.0.pk }}">{{ latest_news.0.title }}</a></h2>
+              <p class="mb-4 d-block">{{ latest_news.0.text|truncatewords:40 }}</p>
+
+              <div class="d-flex align-items-center author">
+                <div class="photo"><img src="/static/img/person-1.jpg" alt="" class="img-fluid"></div>
+                <div class="name">
+                  <h3 class="m-0 p-0">{{ latest_news.0.author.user.first_name }} {{ latest_news.0.author.user.last_name }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="row g-5">
+              <div class="col-lg-4 border-start custom-border">
+                {% for news in latest_news|slice:"1:4" %}
+                <div class="post-entry-1">
+                  <a href="{{ news.pk }}"><img src="{{ news.main_photo.url }}" alt="" class="img-fluid"></a>
+                  <div class="post-meta"><span class="date">{{ news.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.created_at|date:"Y M d D G:i" }}</span></div>
+                  <h2><a href="{{ news.pk }}">{{ news.title }}</a></h2>
+                </div>
+                {% endfor %}
+              </div>
+
+              <div class="col-lg-4 border-start custom-border">
+                {% for news in latest_news|slice:"4:" %}
+                <div class="post-entry-1">
+                  <a href="{{ news.pk }}"><img src="{{ news.main_photo.url }}" alt="" class="img-fluid"></a>
+                  <div class="post-meta"><span class="date">{{ news.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.created_at|date:"Y M d D G:i" }}</span></div>
+                  <h2><a href="{{ news.pk }}">{{ news.title }}</a></h2>
+                </div>
+                {% endfor %}
+              </div>
+
+                {% block trending_section %}
+                {% endblock trending_section %}
+
+            </div>
+          </div>
+
+        </div> <!-- End .row -->
+      </div>
+    </section> <!-- End Post Grid Section -->
+{% endblock postgrid %}

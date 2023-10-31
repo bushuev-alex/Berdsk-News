@@ -1,0 +1,23 @@
+{% extends 'flatpages/index/2_add_postgrid.html' %}
+
+{% block trending_section %}
+<!-- Trending Section -->
+<div class="col-lg-4">
+
+<div class="trending">
+  <h3>В трендах</h3>
+  <ul class="trending-post">
+    {% for number, news in enum_trending_news %}
+    <li>
+      <a href="{{ news.id }}">
+        <span class="number">{{ number|add:"1" }}</span>
+        <h3>{{ news.title }}</h3>
+        <span class="author">{{ news.author.user.first_name }} {{ news.author.user.last_name }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+</div> <!-- End Trending Section -->
+{% endblock trending_section %}

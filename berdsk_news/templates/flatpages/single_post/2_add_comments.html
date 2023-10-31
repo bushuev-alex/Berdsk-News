@@ -1,0 +1,63 @@
+{% extends 'flatpages/single_post/1_add_single_post_content.html' %}
+
+{% block comments %}
+
+<!-- ======= Comments ======= -->
+<div class="comments">
+  <h5 class="comment-title py-4">{{ comments.count }} комментария</h5>
+
+
+  {% for comment in comments %}
+  {% if not comment.answer_id %}
+  <div class="comment d-flex mb-4">
+    <div class="flex-shrink-0">
+      <div class="avatar avatar-sm rounded-circle">
+        <img class="avatar-img" src="/static/img/person-2.jpg" alt="" class="img-fluid">
+      </div>
+    </div>
+    <div class="flex-shrink-1 ms-2 ms-sm-3">
+      <div class="comment-meta d-flex align-items-baseline">
+        <h6 class="me-2">{{ comment.user.username }}</h6>
+        <span class="text-muted">4d</span>
+      </div>
+      <div class="comment-body">
+        {{ comment.text }}
+      </div>
+
+
+      <div class="comment-replies bg-light p-3 mt-3 rounded">
+        <h6 class="comment-replies-title mb-4 text-muted text-uppercase">{{ comments.count }} ответа</h6>
+      {% for answer in comments %}
+      {% if answer.answer_id == comment.id %}
+        <div class="reply d-flex mb-4">
+          <div class="flex-shrink-0">
+            <div class="avatar avatar-sm rounded-circle">
+              <img class="avatar-img" src="/static/img/person-4.jpg" alt="" class="img-fluid">
+            </div>
+          </div>
+          <div class="flex-grow-1 ms-2 ms-sm-3">
+            <div class="reply-meta d-flex align-items-baseline">
+              <h6 class="mb-0 me-2">{{ answer.user.username }}</h6>
+              <span class="text-muted">2d</span>
+            </div>
+            <div class="reply-body">
+              {{ answer.text }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      {% endfor %}
+      </div>
+
+
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+
+
+
+</div>
+<!-- End Comments -->
+
+{% endblock comments %}
