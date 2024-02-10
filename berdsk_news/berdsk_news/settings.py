@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 
-from .keys import DJ_SCRT_KEY
+from config import DJ_SCRT_KEY, DB_HOST, DB_PORT, DB_PASS, DB_NAME, DB_LOGIN
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,11 +94,11 @@ DATABASES = {
     },
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "berdsk_news",
-        'USER': os.getenv('FSTR_DB_LOGIN'),
-        'PASSWORD': os.getenv('FSTR_DB_PASS'),
-        'HOST': os.getenv('FSTR_DB_HOST'),
-        'PORT': os.getenv('FSTR_DB_PORT'),
+        "NAME": DB_NAME,
+        'USER': DB_LOGIN,
+        'PASSWORD': DB_PASS,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
     }
 }
 
