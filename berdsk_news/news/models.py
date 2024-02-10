@@ -1,107 +1,111 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
-from datetime import datetime
-from django.utils.translation import gettext
+import pytz
+# from datetime import datetime
+# from django.utils.translation import gettext
+# from itertools import zip_longest
 
-from itertools import zip_longest
+
+class Origin(models.Model):
+    name = models.CharField(unique=True, null=False)
+    base_url = models.CharField(unique=True, null=False)
+    icon_url = models.CharField(null=True, default="нет")
+    rating = models.IntegerField(default=0)
+
+    def like(self):
+        self.rating += 1
+        self.save()
+        return ''
+
+    def dislike(self):
+        self.rating -= 1
+        self.save()
+        return ''
+
+    def __str__(self):
+        return f"{self.name}: {self.base_url}"
 
 
 class Author(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    photo = models.ImageField(upload_to="static/img/users")
+    first_name = models.CharField(max_length=20, null=True)
+    middle_name = models.CharField(max_length=20, null=True)
+    last_name = models.CharField(max_length=20, null=True)
+    work_at = models.ForeignKey(Origin, null=True, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
 
-    def update_rating(self):
-        # суммарный рейтинг каждой статьи автора
-        news = News.objects.filter(author=self)
-        articles_rating = sum((news_.rating for news_ in news))
-
-        # суммарный рейтинг всех комментариев автора
-        comments = Comment.objects.filter(user=self.user)
-        comments_by_author_rating = sum((comment.rating for comment in comments))
-
-        # суммарный рейтинг всех комментариев к статьям автора.
-        news = News.objects.filter(author=self)
-        sets_of_comments = (Comment.objects.filter(news=news_) for news_ in news)
-
-        comments_to_author_rating = 0
-        for set_ in sets_of_comments:
-            for comment in set_:
-                comments_to_author_rating += comment.rating
-
-        self.rating = articles_rating * 3 + comments_by_author_rating + comments_to_author_rating
+    def like(self):
+        self.rating += 1
         self.save()
+        return ''
+
+    def dislike(self):
+        self.rating -= 1
+        self.save()
+        return ''
 
     def __str__(self):
         return f"{self.user}: rating {self.rating}"
 
 
 class Category(models.Model):
-    power = 'PO'
-    business = 'BU'
-    finance = 'FI'
-    economics = 'EC'
-    society = 'SO'
-    culture = 'CU'
-    sport = 'SP'
-    technology = 'TE'
-    ecology = 'EC'
-    roads = 'RO'
-    helth = 'HE'
-    housing = 'HO'
-    young = 'YO'
-    pensions = 'PE'
-    photo = 'PH'
-    region_154 = 'RE'
-    advertisement = 'AD'
-    weather = 'WE'
-    other = 'OT'
 
-    CATEGORY_TYPE = [(power, 'Политика'),
-                     (business, 'Бизнес'),
-                     (finance, 'Финансы'),
-                     (economics, 'Экономика'),
-                     (society, 'Общество'),
-                     (culture, 'Культура'),
-                     (sport, 'Спорт'),
-                     (technology, 'Технологии'),
-                     (ecology, 'Экология'),
-                     (roads, 'Дороги и транспорт'),
-                     (helth, 'Здоровье'),
-                     (housing, 'ЖКХ'),
-                     (young, 'Молодежь'),
-                     (pensions, 'Пенсии и пособия'),
-                     (photo, 'Фото'),
-                     (region_154, 'Новости региона'),
-                     (advertisement, 'Объявления'),
-                     (weather, 'Погода'),
-                     (other, 'Остальное')]
+    name = models.CharField(unique=True)
+    rating = models.IntegerField(default=0)
 
-    name = models.CharField(max_length=2, unique=True, choices=CATEGORY_TYPE, default=society)
-    subscribers = models.ManyToManyField(User, blank=True, null=True, related_name='categories')
+    def like(self):
+        self.rating += 1
+        self.save()
+        return ''
 
-    def get_full_name(self):
-        return [x[1] for x in self.CATEGORY_TYPE if x[0] == self.name]
+    def dislike(self):
+        self.rating -= 1
+        self.save()
+        return ''
+
+    def __str__(self):
+        return self.name
+
+
+class Tag(models.Model):
+
+    name = models.CharField(unique=True)
+    rating = models.IntegerField(default=0)
+
+    def like(self):
+        self.rating += 1
+        self.save()
+        return ''
+
+    def dislike(self):
+        self.rating -= 1
+        self.save()
+        return ''
 
     def __str__(self):
         return self.name
 
 
 class Photo(models.Model):
-    image = models.ImageField(upload_to='static/img')
+    image_url = models.CharField()
     created_at = models.DateTimeField(auto_now_add=True)
-    description = models.TextField(default=' ')
+    description = models.TextField()
 
 
 class News(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    category = models.ManyToManyField(Category, through='NewsCategory', default='SO')
+    author = models.ForeignKey(Author, null=True, on_delete=models.CASCADE)  # models.CharField()  #
     title = models.TextField()
-    text = models.TextField()
-    main_photo = models.ImageField(upload_to='static/img', default="static/img/post-slide-1.jpg")
-    photo = models.ManyToManyField(Photo, through='NewsPhotos')
+    brief_text = models.TextField()
+    full_text = models.TextField()
+    title_image_url = models.TextField()
+    images_urls = models.TextField(null=True)
+    tag = models.ManyToManyField(Tag, through="NewsTag")
+    search_words = models.TextField(null=True)
+    category = models.ManyToManyField(Category, through="NewsCategory", null=True)
+    parsed_from = models.ForeignKey(Origin, null=True, on_delete=models.CASCADE)  # models.CharField(30)  #
+    full_text_link = models.TextField()
+    published_at = models.DateTimeField()
+    parsed_at = models.DateTimeField(auto_now_add=True)
     rating = models.IntegerField(default=0)
 
     def like(self):
@@ -115,63 +119,76 @@ class News(models.Model):
         return ''
 
     def preview(self):
-        if len(self.text) < 124:
-            return self.text[:len(self.text)]
-        return self.text[:124] + "..."
+        if len(self.full_text) < 124:
+            return self.full_text[:len(self.text)]
+        return self.full_text[:124] + "..."
 
-    def split_by_n(self):
-        return self.text.split('\n')
+    def split_by_XYWZ(self):
+        res: list[str] = self.full_text.split('XYWZ')
+        if res[-1].startswith("Ранее мы"):
+            return res[:-1]
+        return res
 
-    def split_by_n_with_photo(self):
-        split_by_n = self.text.split('\r\n\r\n')
-        photo = self.photo.all().order_by('id')
-        return zip_longest(split_by_n, photo, fillvalue=None)
+    def replace_XYWZ(self):
+        return self.full_text.replace("XYWZ", " ")[:50]
+
+    def split_photo_urls(self) -> list:
+        return self.images_urls.split()
 
     def get_absolute_url(self):
         return reverse('news_detail', args=[str(self.id)])
 
     def __str__(self):
-        return f"{self.title}: {self.text[:20]}"
+        return f"{self.title}: {self.full_text[:20]}"
 
 
 class NewsCategory(models.Model):
     news = models.ForeignKey(News, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = ('news', 'category',)
 
-class NewsPhotos(models.Model):
+
+class NewsTag(models.Model):
     news = models.ForeignKey(News, on_delete=models.CASCADE)
-    photo = models.ForeignKey(Photo, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('news', 'tag',)
 
 
-class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    news = models.ForeignKey(News, on_delete=models.CASCADE)
-    answer = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
-    text = models.TextField()
-    date_time = models.DateTimeField(auto_now_add=True)
-    rating = models.IntegerField(default=0)
-
-    def like(self):
-        self.rating += 1
-        self.save()
-        return ''
-
-    def dislike(self):
-        self.rating -= 1
-        self.save()
-        return ''
+# class NewsPhotos(models.Model):
+#     news = models.ForeignKey(News, on_delete=models.CASCADE)
+#     photo = models.ForeignKey(Photo, on_delete=models.CASCADE)
 
 
-class CmntToCmnt(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-    # comment_to_cmnt = models.ForeignKey('self', on_delete=models.CASCADE, default=' ')
-    text = models.TextField()
-    date_time = models.DateTimeField(auto_now_add=True)
-    rating = models.IntegerField(null=False, default=0)
-
-
+# class Comment(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     news = models.ForeignKey(News, on_delete=models.CASCADE)
+#     answer = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+#     text = models.TextField()
+#     date_time = models.DateTimeField(auto_now_add=True)
+#     rating = models.IntegerField(default=0)
+#
+#     def like(self):
+#         self.rating += 1
+#         self.save()
+#         return ''
+#
+#     def dislike(self):
+#         self.rating -= 1
+#         self.save()
+#         return ''
+#
+#
+# class CmntToCmnt(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+#     # comment_to_cmnt = models.ForeignKey('self', on_delete=models.CASCADE, default=' ')
+#     text = models.TextField()
+#     date_time = models.DateTimeField(auto_now_add=True)
+#     rating = models.IntegerField(null=False, default=0)
 
 
 class Advertiser(models.Model):
@@ -195,3 +212,4 @@ class Advertisement(models.Model):
     def click(self):
         self.rating += 1
         self.save()
+
