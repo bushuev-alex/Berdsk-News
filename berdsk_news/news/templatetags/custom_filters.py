@@ -9,7 +9,7 @@ register = template.Library()
 
 @register.filter()
 def news_by_category(category_id: int) -> QuerySet:
-    news_qs = News.objects.filter(category=category_id).order_by('-id')
+    news_qs = News.objects.filter(category=category_id).order_by('-published_at')
     return news_qs
 
 
