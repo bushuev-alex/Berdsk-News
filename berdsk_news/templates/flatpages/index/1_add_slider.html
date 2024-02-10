@@ -12,10 +12,10 @@
 
                 {% for news in latest_news %}
                 <div class="swiper-slide">
-                  <a href="{{ news.pk }}" class="img-bg d-flex align-items-end" style="background-image: url('{{ news.main_photo.url }}');">
+                  <a href="{{ news.pk }}" class="img-bg d-flex align-items-end" style="background-image: url('{{ news.title_image_url }}');">
                     <div class="img-bg-inner">
                       <h2>{{ news.title }}</h2>
-                      <p>{{ news.text|truncatewords:20 }}</p>
+                      <p>{{ news.brief_text|truncatewords:20 }}</p>
                       </div>
                   </a>
                 </div>

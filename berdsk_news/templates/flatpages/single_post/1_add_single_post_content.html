@@ -8,31 +8,36 @@
     <span class="date">
 
       {% for category in single_news.category.all %}
-        <a href="{{ category.get_full_name.0 }}">{{ category.get_full_name.0 }},</a>
+        <a href="{{ category.name }}">{{ category.name }},</a>
       {% endfor %}
 
     </span>
     <span class="mx-1">&bullet;</span>
-    <span>{{ single_news.created_at|date:"Y M d D G:i" }}</span>
+    <span>{{ single_news.published_at|date:"Y M d D G:i" }}</span>
   </div>
   <h1 class="mb-5">{{ single_news.title }}</h1>
 
-<!--              <p><span class="firstcharacter">{{single_news.text.0 }}</span>orem ipsum dolor sit, amet consectetur adipisicing elit. Ratione officia sed, suscipit distinctio, numquam omnis quo fuga ipsam quis inventore voluptatum recusandae culpa, unde doloribus saepe labore alias voluptate expedita? Dicta delectus beatae explicabo odio voluptatibus quas, saepe qui aperiam autem obcaecati, illo et! Incidunt voluptas culpa neque repellat sint, accusamus beatae, cumque autem tempore quisquam quam eligendi harum debitis.</p>-->
-
   <figure class="my-4">
-    <img src="{{ single_news.main_photo.url }}" alt="" class="img-fluid">
-    <figcaption>{{ single_news.main_photo.image.description }}</figcaption>
+    <img src="{{ single_news.title_image_url }}" alt="" class="img-fluid">
+<!--    <figcaption>{{ single_news.title_image_url.description }}</figcaption>-->
   </figure>
 
-  {% for p, photo in single_news.split_by_n_with_photo %}
+  {% for p in single_news.split_by_XYWZ %}
     <p>{{ p }}</p>
-    {% if photo %}
-      <figure class="my-4">
-        <img src="{{ photo.image.url }}" alt="" class="img-fluid">
-        <figcaption>{{ photo.description }}</figcaption>
-      </figure>
-    {% endif %}
   {% endfor %}
+
+  {% for photo in single_news.split_photo_urls %}
+    <p>
+    <img src="{{ photo }}" alt="" class="img-fluid">
+    </p>
+  {% endfor %}
+
+  <div class="d-flex align-items-center author">
+    <div class="photo"><img src="{{ single_news.parsed_from.icon_url }}" alt="" class="img-fluid"></div>
+      <div class="name">
+        <h3 class="m-0 p-0"><a href="{{ single_news.full_text_link }}">Читать в источнике {{ single_news.parsed_from.name }}</a> </h3>
+      </div>
+  </div>
 
 </div><!-- End Single Post Content -->
 {% endblock single_post_content %}

@@ -4,7 +4,7 @@
 {% block pagination %}
 
 {% if page_obj.has_previous %}
-<a href="?page={{ page_obj.previous_page_number }}" class="prev">Prevous</a>
+<a href="?page={{ page_obj.previous_page_number }}" class="prev">Назад</a>
 
   {% if page_obj.previous_page_number == 1 %}
     <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
@@ -42,7 +42,7 @@
       <a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
     {% endif %}
 
-  <a href="?page={{ page_obj.next_page_number }}" class="next">Next</a>
+  <a href="?page={{ page_obj.next_page_number }}" class="next">Вперед</a>
 {% endif %}
 
 {% endblock pagination %}

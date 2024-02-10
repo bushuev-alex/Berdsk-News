@@ -2,21 +2,21 @@
 
 {% block category_list %}
 <div class="col-md-9" data-aos="fade-up">
-  <h3 class="category-title">Категория: {{ category.get_full_name.0 }}</h3>
+  <h3 class="category-title">Категория: {{ category.name }}</h3>
 
   {% for news in news_list %}
   <div class="d-md-flex post-entry-2 half">
     <a href="single-post.html" class="me-4 thumbnail">
-      <img src="{{ news.main_photo.url }}" alt="" class="img-fluid">
+      <img src="{{ news.title_image_url }}" alt="" class="img-fluid">
     </a>
     <div>
-      <div class="post-meta"><span class="date">{{ category.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.created_at|date:"Y M d D G:i" }}</span></div>
+      <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.published_at|date:"Y M d D G:i" }}</span></div>
       <h3><a href="/news/{{ news.id }}">{{ news.title }}</a></h3>
-      <p>{{ news.text|truncatewords:20 }}</p>
+      <p>{{ news.brief_text|truncatewords:20 }}</p>
       <div class="d-flex align-items-center author">
-        <div class="photo"><img src="assets/img/person-2.jpg" alt="" class="img-fluid"></div>
+        <div class="photo"><img src="{{ news.parsed_from.icon_url }}" alt="" class="img-fluid"></div>
         <div class="name">
-          <h3 class="m-0 p-0">{{ interesting.author.user.first_name }} {{ interesting.author.user.last_name }}</h3>
+          <h3 class="m-0 p-0"><a href="{{ news.full_text_link }}">Читать в источнике {{ news.parsed_from.name }}</a> </h3>
         </div>
       </div>
     </div>

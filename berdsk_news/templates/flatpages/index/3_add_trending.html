@@ -12,7 +12,13 @@
       <a href="{{ news.id }}">
         <span class="number">{{ number|add:"1" }}</span>
         <h3>{{ news.title }}</h3>
-        <span class="author">{{ news.author.user.first_name }} {{ news.author.user.last_name }}</span>
+        <div class="d-flex align-items-center author">
+                  <div class="photo"><img src="{{ news.parsed_from.icon_url }}" alt="" class="img-fluid"></div>
+                  <div class="name">
+                    <h3 class="m-0 p-0">{{ news.parsed_from.name }}</h3>
+                  </div>
+        </div>
+<!--        <span class="author">{{ news.parsed_from.name }}</span>-->
       </a>
     </li>
     {% endfor %}

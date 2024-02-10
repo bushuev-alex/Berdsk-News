@@ -10,8 +10,8 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-header d-flex justify-content-between align-items-center mb-5">
-          <h2>{{ category.get_full_name.0 }}</h2>
-          <div><a href="/{{ category.get_full_name.0 }}" class="more">Все новости в категории {{ category.get_full_name.0 }}</a></div>
+          <h2>{{ category.name }}</h2>
+          <div><a href="/news/category/{{ category.id }}" class="more">Все новости в категории {{ category.name }}</a></div>
         </div>
 
         <div class="row">
@@ -19,16 +19,16 @@
 
             <div class="d-lg-flex post-entry-2">
               <a href="{{ news_qs.0.id }}" class="me-4 thumbnail mb-4 mb-lg-0 d-inline-block">
-                <img src="{{ news_qs.0.main_photo.url }}" alt="" class="img-fluid">
+                <img src="{{ news_qs.0.title_image_url }}" alt="" class="img-fluid">
               </a>
               <div>
-                <div class="post-meta"><span class="date">{{ category.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.0.created_at|date:"Y M d D G:i" }}</span></div>
+                <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.0.published_at|date:"Y-m-d D H:i" }}</span></div>
                 <h3><a href="{{ news_qs.0.id }}">{{ news_qs.0.title }}</a></h3>
-                <p>{{ news_qs.0.text|truncatewords:20 }}</p>
+                <p>{{ news_qs.0.brief_text|truncatewords:20 }}</p>
                 <div class="d-flex align-items-center author">
-                  <div class="photo"><img src="/static/img/person-2.jpg" alt="" class="img-fluid"></div>
+                  <div class="photo"><img src="{{ news_qs.0.parsed_from.icon_url }}" alt="" class="img-fluid"></div>
                   <div class="name">
-                    <h3 class="m-0 p-0">{{ news_qs.0.author.user.first_name }} {{ news_qs.0.author.user.last_name }}</h3>
+                    <h3 class="m-0 p-0">{{ news_qs.0.parsed_from.name }}</h3>
                   </div>
                 </div>
               </div>
@@ -37,26 +37,26 @@
             <div class="row">
               <div class="col-lg-4">
                 <div class="post-entry-1 border-bottom">
-                  <a href="{{ news_qs.1.id }}"><img src="{{ news_qs.1.main_photo.url }}" alt="" class="img-fluid"></a>
-                  <div class="post-meta"><span class="date">{{ category.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.1.created_at|date:"Y M d D G:i" }}</span></div>
+                  <a href="{{ news_qs.1.id }}"><img src="{{ news_qs.1.title_image_url }}" alt="" class="img-fluid"></a>
+                  <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.1.published_at|date:"Y M d D G:i" }}</span></div>
                   <h2 class="mb-2"><a href="{{ news_qs.1.id }}">{{ news_qs.1.title }}</a></h2>
-                  <span class="author mb-3 d-block">{{ news_qs.1.author.user.first_name }} {{ news_qs.1.author.user.last_name }}</span>
-                  <p class="mb-4 d-block">{{ news_qs.1.text|truncatewords:20 }}</p>
+                  <span class="author mb-3 d-block">{{ news_qs.1.parsed_from.name }} </span>
+                  <p class="mb-4 d-block">{{ news_qs.1.brief_text|truncatewords:20 }}</p>
                 </div>
 
                 <div class="post-entry-1">
-                  <div class="post-meta"><span class="date">{{ category.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.2.created_at|date:"Y M d D G:i" }}</span></div>
+                  <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.2.published_at|date:"Y M d D G:i" }}</span></div>
                   <h2 class="mb-2"><a href="{{ news_qs.2.id }}">{{ news_qs.2.title }}</a></h2>
-                  <span class="author mb-3 d-block">{{ news_qs.2.author.user.first_name }} {{ news_qs.2.author.user.last_name }}</span>
+                  <span class="author mb-3 d-block">{{ news_qs.2.parsed_from.name }}</span>
                 </div>
               </div>
               <div class="col-lg-8">
                 <div class="post-entry-1">
-                  <a href="{{ news_qs.3.id }}"><img src="{{ news_qs.3.main_photo.url }}" alt="" class="img-fluid"></a>
-                  <div class="post-meta"><span class="date">{{ category.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.3.created_at|date:"Y M d D G:i" }}</span></div>
+                  <a href="{{ news_qs.3.id }}"><img src="{{ news_qs.3.title_image_url }}" alt="" class="img-fluid"></a>
+                  <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.3.published_at|date:"Y M d D G:i" }}</span></div>
                   <h2 class="mb-2"><a href="{{ news_qs.3.id }}">{{ news_qs.3.title }}</a></h2>
-                  <span class="author mb-3 d-block">{{ news_qs.3.author.user.first_name }} {{ news_qs.3.author.user.last_name }}</span>
-                  <p class="mb-4 d-block">{{ news_qs.3.text|truncatewords:20 }}</p>
+                  <span class="author mb-3 d-block">{{ news_qs.3.parsed_from.name }} </span>
+                  <p class="mb-4 d-block">{{ news_qs.3.brief_text|truncatewords:20 }}</p>
                 </div>
               </div>
             </div>
@@ -64,11 +64,17 @@
 
           <div class="col-md-3">
 
-            {% for news in news_qs|slice:"4:" %}
+            {% for news in news_qs|slice:"4:11" %}
             <div class="post-entry-1 border-bottom">
-              <div class="post-meta"><span class="date">{{ news.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.created_at|date:"Y M d D G:i" }}</span></div>
+              <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.published_at|date:"Y M d D G:i" }}</span></div>
               <h2 class="mb-2"><a href="{{ news.id }}">{{ news.title }}</a></h2>
-              <span class="author mb-3 d-block">{{ news.author.user.first_name }} {{ news.author.user.last_name }}</span>
+<!--              <span class="author mb-3 d-block">{{ news.parsed_from.name }} </span>-->
+              <div class="d-flex align-items-center author">
+                  <div class="photo"><img src="{{ news.parsed_from.icon_url }}" alt="" class="img-fluid"></div>
+                  <div class="name">
+                    <h3 class="m-0 p-0">{{ news.parsed_from.name }}</h3>
+                  </div>
+                </div>
             </div>
             {% endfor %}
 

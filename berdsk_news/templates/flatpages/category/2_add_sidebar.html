@@ -21,9 +21,9 @@
     <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
       {% for interesting in interesting_news %}
       <div class="post-entry-1 border-bottom">
-        <div class="post-meta"><span class="date">{{ interesting.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ interesting.created_at|date:"Y M d D G:i" }}</span></div>
-        <h2 class="mb-2"><a href="{{ interesting.id }}">{{ interesting.title }}</a></h2>
-        <span class="author mb-3 d-block">{{ interesting.author.user.first_name }} {{ interesting.author.user.last_name }}</span>
+        <div class="post-meta"><span class="date">{{ interesting.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ interesting.published_at|date:"Y M d D G:i" }}</span></div>
+        <h2 class="mb-2"><a href="/news/{{ interesting.id }}">{{ interesting.title }}</a></h2>
+        <span class="author mb-3 d-block">{{ interesting.parsed_from.name }}</span>
       </div>
       {% endfor %}
     </div> <!-- End Интерес -->
@@ -32,9 +32,9 @@
     <div class="tab-pane fade" id="pills-trending" role="tabpanel" aria-labelledby="pills-trending-tab">
       {% for trending in trending_news %}
       <div class="post-entry-1 border-bottom">
-        <div class="post-meta"><span class="date">{{ trending.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ trending.created_at|date:"Y M d D G:i" }}</span></div>
-        <h2 class="mb-2"><a href="{{ trending.id }}">{{ trending.title }}</a></h2>
-        <span class="author mb-3 d-block">{{ trending.author.user.first_name }} {{ trending.author.user.last_name }}</span>
+        <div class="post-meta"><span class="date">{{ trending.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ trending.published_at|date:"Y M d D G:i" }}</span></div>
+        <h2 class="mb-2"><a href="/news/{{ trending.id }}">{{ trending.title }}</a></h2>
+        <span class="author mb-3 d-block">{{ trending.parsed_from.name }}</span>
       </div>
       {% endfor %}
     </div> <!-- End Тренды -->
@@ -43,9 +43,9 @@
     <div class="tab-pane fade" id="pills-latest" role="tabpanel" aria-labelledby="pills-latest-tab">
       {% for latest in latest_news %}
       <div class="post-entry-1 border-bottom">
-        <div class="post-meta"><span class="date">{{ latest.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ latest.created_at|date:"Y M d D G:i" }}</span></div>
-        <h2 class="mb-2"><a href="{{ latest.id }}">{{ latest.title }}</a></h2>
-        <span class="author mb-3 d-block">{{ latest.author.user.first_name }} {{ latest.author.user.last_name }}</span>
+        <div class="post-meta"><span class="date">{{ latest.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ latest.published_at|date:"Y M d D G:i" }}</span></div>
+        <h2 class="mb-2"><a href="/news/{{ latest.id }}">{{ latest.title }}</a></h2>
+        <span class="author mb-3 d-block">{{ latest.parsed_from.name }}</span>
       </div>
       {% endfor %}
     </div> <!-- End Последние -->

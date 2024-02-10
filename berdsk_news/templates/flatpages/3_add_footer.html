@@ -10,7 +10,7 @@
         <div class="row g-5">
           <div class="col-lg-4">
             <h3 class="footer-heading">О сайте</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam ab, perspiciatis beatae autem deleniti voluptate nulla a dolores, exercitationem eveniet libero laudantium recusandae officiis qui aliquid blanditiis omnis quae. Explicabo?</p>
+            <p>Сайт - агрегатор новостных сайтов новосибирской области.</p>
             <p><a href="about.html" class="footer-link-more">Узнать больше</a></p>
           </div>
           <div class="col-6 col-lg-2">
@@ -18,17 +18,17 @@
             <ul class="footer-links list-unstyled">
               <li><a href="/"><i class="bi bi-chevron-right"></i> Начало</a></li>
               <li><a href="/news"><i class="bi bi-chevron-right"></i> Все новости</a></li>
-              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Категории</a></li>
-              <li><a href="/authors"><i class="bi bi-chevron-right"></i> Авторы</a></li>
-              <li><a href="about.html"><i class="bi bi-chevron-right"></i> О сайте</a></li>
-              <li><a href="contact.html"><i class="bi bi-chevron-right"></i> Контакты</a></li>
+              <li><a href="/news/categories/"><i class="bi bi-chevron-right"></i> Категории</a></li>
+              <li><a href="/news/origins/"><i class="bi bi-chevron-right"></i>Источники</a></li>
+              <li><a href="/about"><i class="bi bi-chevron-right"></i> О сайте</a></li>
+              <li><a href="/contacts"><i class="bi bi-chevron-right"></i> Контакты</a></li>
             </ul>
           </div>
           <div class="col-6 col-lg-2">
             <h3 class="footer-heading">Категории</h3>
             <ul class="footer-links list-unstyled">
-              {% for category in categories %}
-                <li><a href="category.html"><i class="bi bi-chevron-right"></i> {{ category.get_full_name.0 }}</a></li>
+              {% for category in categories|slice:":15" %}
+                <li><a href="/news/category/{{ category.id }}"><i class="bi bi-chevron-right"></i> {{ category.name }}</a></li>
               {% endfor %}
             </ul>
           </div>
@@ -40,10 +40,10 @@
 
               {% for news in latest_news %}
                 <li>
-                  <a href="/news/{{ news.pk }}" class="d-flex align-items-center">
-                    <img src="{{ news.main_photo.url }}" alt="" class="img-fluid me-3">
+                  <a href="/news/{{ news.id }}" class="d-flex align-items-center">
+                    <img src="{{ news.title_image_url }}" alt="" class="img-fluid me-3">
                     <div>
-                      <div class="post-meta d-block"><span class="date">{{ news.category.all.0.get_full_name.0 }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.created_at|date:"Y M d D G:i" }}</span></div>
+                      <div class="post-meta d-block"><span class="date">{{ news.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.published_at|date:"Y M d D G:i" }}</span></div>
                       <span>{{ news.title }}</span>
                     </div>
                   </a>
@@ -63,7 +63,7 @@
         <div class="row justify-content-between">
           <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
             <div class="copyright">
-              © Copyright <strong><span>ZenBlog</span></strong>. All Rights Reserved
+              © Copyright <strong><span>Бушуев Александр</span></strong>. All Rights Reserved
             </div>
 
             <div class="credits">
@@ -78,11 +78,10 @@
 
           <div class="col-md-6">
             <div class="social-links mb-3 mb-lg-0 text-center text-md-end">
-              <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-              <a href="#" class="google-plus"><i class="bi bi-skype"></i></a>
-              <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+              <!-- uSocial -->
+<script async src="https://usocial.pro/usocial/usocial.js?uid=ace1d68745f74244&v=6.1.5" data-script="usocial" charset="utf-8"></script>
+<div class="uSocial-Share" data-pid="ba846ce000cf4a7575e2a3f40d34c138" data-type="share" data-options="round,style3,default,absolute,horizontal,size32,counter1,counter-after,mobile_position_right" data-social="telegram,wa,vk,ok,email"></div>
+<!-- /uSocial -->
             </div>
 
           </div>

@@ -14,10 +14,10 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="/news">Все новости</a></li>
-          <li class="dropdown"><a href="#"><span>Категории</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+          <li class="dropdown"><a href="/news/categories/"><span>Категории</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
-              {% for category in categories %}
-                <li><a href="/news/category/{{ category.id }}">{{ category.get_full_name.0 }}</a></li>
+              {% for category in categories|slice:":15" %}
+                <li><a href="/news/category/{{ category.id }}">{{ category.name }}</a></li>
                 <ul>
                   {% for undercat in category.name %}
                     <li><a href="#">Подкатегория 1</a></li>
@@ -27,25 +27,41 @@
               </li>
             </ul>
           </li>
-          <li><a href="/authors">Авторы</a></li>
+          <li class="dropdown"><a href="/news/origins/"><span>Источники</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              {% for origin in origins %}
+                <li><a href="/news/origin/{{ origin.id }}">{{ origin.name }}</a></li>
+                <ul>
+                  {% for undercat in origin.name %}
+                    <li><a href="#">Подкатегория 1</a></li>
+                  {% endfor %}
+                </ul>
+              {% endfor %}
+              </li>
+            </ul>
+          </li>
           <li><a href="/about">О компании</a></li>
-          <li><a href="/contacts">Контакты</a></li>
+          <li><a href="/contacts">Рекламодателям</a></li>
         </ul>
       </nav><!-- .navbar -->
 
+      <script async src="https://usocial.pro/usocial/usocial.js?uid=a7bc540e89f74244&v=6.1.5" data-script="usocial" charset="utf-8"></script>
+      <!-- uSocial -->
+      <script async src="https://usocial.pro/usocial/usocial.js?uid=2b693ec57df74244&v=6.1.5" data-script="usocial" charset="utf-8"></script>
+      <div class="uSocial-Share" data-pid="65993eecd17c315898dc08c5f8be400b" data-type="share" data-options="round,style4,default,absolute,horizontal,size32,counter1,counter-after,mobile_position_right" data-social="telegram,wa,vk,ok,email"></div>
+      <!-- /uSocial -->
+
       <div class="position-relative">
-        <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
-        <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
-        <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
 
         <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+
         <i class="bi bi-list mobile-nav-toggle"></i>
 
         <!-- ======= Search Form ======= -->
         <div class="search-form-wrap js-search-form-wrap">
           <form action="search-result.html" class="search-form">
             <span class="icon bi-search"></span>
-            <input type="text" placeholder="Search" class="form-control">
+            <input type="text" placeholder="Поиск" class="form-control">
             <button class="btn js-search-close"><span class="bi-x"></span></button>
           </form>
         </div><!-- End Search Form -->
