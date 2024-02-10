@@ -17,10 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from news.views import MainPage, DetailPage, ListPage
+from news.views import MainPage, DetailPage, CategoryListPage, OriginListPage
 
 urlpatterns = [
     path("news/", MainPage.as_view(), name='news'),
     path("news/<int:pk>", DetailPage.as_view(), name='news_by_id'),
-    path("news/category/<int:pk>", ListPage.as_view(), name='category'),
+    path("news/category/<int:pk>", CategoryListPage.as_view(), name='category'),
+    path("news/origin/<int:pk>", OriginListPage.as_view(), name='origin'),
 ]
