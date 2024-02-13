@@ -99,12 +99,13 @@ class NGSSpider(scrapy.Spider):
         full_text_list: list[soup] = soup.find("div", {"itemprop": "articleBody"}).findAll("p")
         full_text_list_ = []
         for p in full_text_list:
-            include_conditions = (not p.get("itemprop"),
+            exclude_conditions = (p.find("span"),
                                   p.get("itemprop") == "author",
-                                  "Поделиться" not in p.text,
+                                  "Поделиться" in p.text,
                                   )
-            if all(include_conditions):
-                full_text_list_.append(p.text.strip())
+            if any(exclude_conditions):
+                continue
+            full_text_list_.append(p.text.strip())
         return "XYWZ".join(full_text_list_)
 
     async def get_tag_list(self, soup: BeautifulSoup) -> list:
