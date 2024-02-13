@@ -1,7 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.urls import reverse
-import pytz
+# import pytz
 # from datetime import datetime
 # from django.utils.translation import gettext
 # from itertools import zip_longest
@@ -212,4 +212,3 @@ class Advertisement(models.Model):
     def click(self):
         self.rating += 1
         self.save()
-
