@@ -46,7 +46,7 @@ class SibFmSpider(scrapy.Spider):
                        "published_at": datetime.fromisoformat(f"{self.today.year}-"
                                                               f"{'%02d' % self.today.month}-"
                                                               f"{self.today.day}"
-                                                              f"T{time}:00+00:00"),
+                                                              f"T{time}:00"),
                        "parsed_at": datetime.utcnow(),  # дата добавления / парсинга
                        }
             except AttributeError as e:
