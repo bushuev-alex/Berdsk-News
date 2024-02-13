@@ -1,0 +1,56 @@
+{% extends 'flatpages/origin/1_add_origin_list.html' %}
+
+{% block sidebar %}
+<div class="aside-block">
+
+  <ul class="nav nav-pills custom-tab-nav mb-4" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="pills-popular-tab" data-bs-toggle="pill" data-bs-target="#pills-popular" type="button" role="tab" aria-controls="pills-popular" aria-selected="true">Интерес</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-trending-tab" data-bs-toggle="pill" data-bs-target="#pills-trending" type="button" role="tab" aria-controls="pills-trending" aria-selected="false">Тренды</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-latest-tab" data-bs-toggle="pill" data-bs-target="#pills-latest" type="button" role="tab" aria-controls="pills-latest" aria-selected="false">Последние</button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="pills-tabContent">
+
+    <!-- Интерес -->
+    <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab">
+      {% for interesting in interesting_news %}
+      <div class="post-entry-1 border-bottom">
+        <div class="post-meta"><span class="date">{{ interesting.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ interesting.published_at|date:"Y M d D G:i" }}</span></div>
+        <h2 class="mb-2"><a href="{{ interesting.id }}">{{ interesting.title }}</a></h2>
+        <span class="author mb-3 d-block">{{ interesting.parsed_from.name }}</span>
+      </div>
+      {% endfor %}
+    </div> <!-- End Интерес -->
+
+    <!-- Тренды -->
+    <div class="tab-pane fade" id="pills-trending" role="tabpanel" aria-labelledby="pills-trending-tab">
+      {% for trending in trending_news %}
+      <div class="post-entry-1 border-bottom">
+        <div class="post-meta"><span class="date">{{ trending.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ trending.published_at|date:"Y M d D G:i" }}</span></div>
+        <h2 class="mb-2"><a href="{{ trending.id }}">{{ trending.title }}</a></h2>
+        <span class="author mb-3 d-block">{{ trending.parsed_from.name }}</span>
+      </div>
+      {% endfor %}
+    </div> <!-- End Тренды -->
+
+    <!-- Последние -->
+    <div class="tab-pane fade" id="pills-latest" role="tabpanel" aria-labelledby="pills-latest-tab">
+      {% for latest in latest_news %}
+      <div class="post-entry-1 border-bottom">
+        <div class="post-meta"><span class="date">{{ latest.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ latest.published_at|date:"Y M d D G:i" }}</span></div>
+        <h2 class="mb-2"><a href="{{ latest.id }}">{{ latest.title }}</a></h2>
+        <span class="author mb-3 d-block">{{ latest.parsed_from.name }}</span>
+      </div>
+      {% endfor %}
+    </div> <!-- End Последние -->
+
+  </div>
+</div>
+
+{% endblock sidebar %}

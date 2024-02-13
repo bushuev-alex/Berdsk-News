@@ -17,7 +17,7 @@
           <li class="dropdown"><a href="/news/categories/"><span>Категории</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               {% for category in categories|slice:":15" %}
-                <li><a href="/news/category/{{ category.id }}">{{ category.name }}</a></li>
+                <li><a href="/news/category/{{ category.id }}/">{{ category.name }}</a></li>
                 <ul>
                   {% for undercat in category.name %}
                     <li><a href="#">Подкатегория 1</a></li>
@@ -30,7 +30,7 @@
           <li class="dropdown"><a href="/news/origins/"><span>Источники</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               {% for origin in origins %}
-                <li><a href="/news/origin/{{ origin.id }}">{{ origin.name }}</a></li>
+                <li><a href="/news/origin/{{ origin.id }}/">{{ origin.name }}</a></li>
                 <ul>
                   {% for undercat in origin.name %}
                     <li><a href="#">Подкатегория 1</a></li>
@@ -40,8 +40,8 @@
               </li>
             </ul>
           </li>
-          <li><a href="/about">О компании</a></li>
-          <li><a href="/contacts">Рекламодателям</a></li>
+          <li><a href="/about/">О компании</a></li>
+          <li><a href="/contacts/">Рекламодателям</a></li>
         </ul>
       </nav><!-- .navbar -->
 
