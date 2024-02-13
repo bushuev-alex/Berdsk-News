@@ -2,19 +2,21 @@ from celery import shared_task
 import logging
 import subprocess
 import json
+import os
 # from .schemas import SpiderOrigin, UserName
 
 # logger = logging.getLogger('app')
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SPIDER_NAMES = json.loads(os.getenv('SPIDER_NAMES'))
+
 
 
 @shared_task()
 def launch_spider(origin: str):
-    origin_spiders = {"ksonline.ru": "ksonline",
-                      "berdsk-bn.ru": "berdskbn",
-                      "ngs.ru": "ngs",
-                      "sib.fm": "sibfm",
-                      }
-    spidername = origin_spiders.get(origin)
+    spidername = SPIDER_NAMES.get(origin)
     print(spidername)
     # spidername = origin.__dict__.get("parsed_from").__dict__.get("_name_")
     try:
