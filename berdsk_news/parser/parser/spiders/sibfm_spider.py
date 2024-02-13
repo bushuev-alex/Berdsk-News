@@ -1,5 +1,6 @@
 import datetime
 # import re
+import json
 
 from bs4 import BeautifulSoup
 import requests
@@ -43,10 +44,7 @@ class SibFmSpider(scrapy.Spider):
                        "category_list": news_info.get("category_list"),
                        "parsed_from": "sib.fm",  # название сайта
                        "full_text_link": full_text_link,  # ссылка на полный текст
-                       "published_at": datetime.fromisoformat(f"{self.today.year}-"
-                                                              f"{'%02d' % self.today.month}-"
-                                                              f"{self.today.day}"
-                                                              f"T{time}:00"),
+                       "published_at": datetime.fromisoformat(news_info.get("published_at")),
                        "parsed_at": datetime.utcnow(),  # дата добавления / парсинга
                        }
             except AttributeError as e:
@@ -63,6 +61,10 @@ class SibFmSpider(scrapy.Spider):
         res = requests.get(url=link, headers=self.headers)
         if res.status_code == 200:
             soup = BeautifulSoup(res.content, 'lxml')
+
+            script_content = soup.findAll("script", {"type": "application/ld+json"})[0]
+            script_content_ = json.loads(str(script_content.contents[0]))
+
             full_text_list: list[soup] = soup.find("div", {"class": "content-article__text"}).findAll("p")
             title_image_url = soup.find("div", {"class": "header-article__image"}).find("img").get("src")
             author = soup.find("p", {"class": "author-text"}).find("a")
@@ -73,5 +75,6 @@ class SibFmSpider(scrapy.Spider):
                 "full_text": "XYWZ".join((p.text.strip() for p in full_text_list[1:])),
                 "title_image_url": title_image_url,
                 "category_list": [categories.text.strip().capitalize()],
-                "images_urls": " "
+                "images_urls": " ",
+                "published_at": script_content_.get("datePublished"),
             }
