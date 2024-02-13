@@ -3,13 +3,15 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 # useful for handling different item types with a single interface
+import json
 
 from itemadapter import ItemAdapter
 import psycopg
 from psycopg.errors import UniqueViolation
 import scrapy
-from prjct_cnfg import DB_LOGIN, DB_PASS, DB_NAME, DB_HOST, DB_PORT
+from .settings import DB_LOGIN, DB_PASS, DB_NAME, DB_HOST, DB_PORT, ORIGINS
 
+ORIGINS = json.loads(ORIGINS)
 
 # from django.db import connection
 
@@ -137,11 +139,6 @@ class ParserPipeline:
 
     def fill_origin(self, item, spider):
         parsed_from = item.get("parsed_from")
-
-        ORIGINS = {"ksonline.ru": "Континент Сибирь Онлайн",
-                   "berdsk-bn.ru": "Бердские Новости",
-                   "ngs.ru": "НГС",
-                   "sib.fm": "Сиб.фм"}
 
         query = """SELECT id FROM news_origin WHERE base_url = %s"""
         self.cur.execute(query, (parsed_from,))
