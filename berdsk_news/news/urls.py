@@ -17,11 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from news.views import MainPage, DetailPage, CategoryListPage, OriginListPage
+from news.views import MainPage, DetailPage, CategoryListPage, OriginListPage, ContactPage, About
 
 urlpatterns = [
     path("news/", MainPage.as_view(), name='news'),
-    path("news/<int:pk>", DetailPage.as_view(), name='news_by_id'),
-    path("news/category/<int:pk>", CategoryListPage.as_view(), name='category'),
-    path("news/origin/<int:pk>", OriginListPage.as_view(), name='origin'),
+    path("news/<int:pk>/", DetailPage.as_view(), name='news_by_id'),
+    path("news/categories/", ContactPage.as_view(), name='contacts'),
+    path("news/category/<int:pk>/", CategoryListPage.as_view(), name='category'),
+    path("news/origins/", ContactPage.as_view(), name='contacts'),
+    path("news/origin/<int:pk>/", OriginListPage.as_view(), name='origin'),
+    path("contacts/", ContactPage.as_view(), name='contacts'),
+    path("about/", About.as_view(), name='about')
 ]

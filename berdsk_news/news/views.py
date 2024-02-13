@@ -27,9 +27,9 @@ class MainPage(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all().order_by("-rating", "id")
-        context["origins"] = Origin.objects.all().order_by("id")
-        context["latest_news"] = News.objects.all().order_by("-published_at")[:7]
+        context["categories"] = Category.objects.all().order_by("-rating")
+        context["origins"] = Origin.objects.all()
+        context["latest_news"] = News.objects.all().order_by("-id")[:7]
         trending_news = News.objects.all().filter(published_at__gte=self.week_ago).order_by('-rating')[:5]
         context["enum_trending_news"] = enumerate(trending_news)
         return context
@@ -44,7 +44,7 @@ class DetailPage(TemplateView):
         context = super().get_context_data(**kwargs)
         context["single_news"] = News.objects.get(id=pk)
         # context["comments"] = Comment.objects.filter(news_id=pk)  # .order_by("id")
-        context["categories"] = Category.objects.all().order_by("id", "-rating")[:15]
+        context["categories"] = Category.objects.all().order_by("-rating")[:15]
         context["tags"] = Tag.objects.all().order_by("name", "-rating")[:15]
         context["origins"] = Origin.objects.all().order_by("id", "-rating")
 
@@ -61,21 +61,16 @@ class DetailPage(TemplateView):
         return context
 
 
-class CategoryListPage(ListView):
-    template_name = 'flatpages/category/category.html'
+class BaseListPage(ListView):
     context_object_name = "news_list"
-    paginate_by = 5
+    paginate_by = 10
     week_ago = datetime.now() - timedelta(days=7)
-
-    def get_queryset(self):
-        return News.objects.filter(category=self.kwargs['pk']).order_by("-published_at")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["category"] = Category.objects.get(id=self.kwargs['pk'])
-        context["categories"] = Category.objects.all().order_by("id")
-        context["tags"] = Tag.objects.all().order_by("id", "-rating")[:15]
 
+        context["categories"] = Category.objects.all().order_by("-rating")
+        context["tags"] = Tag.objects.all().order_by("-rating")[:15]
         context["origins"] = Origin.objects.all().order_by("id")
 
         context["latest_news"] = News.objects.all().order_by("-published_at")[:6]
@@ -85,24 +80,47 @@ class CategoryListPage(ListView):
         return context
 
 
-class OriginListPage(ListView):
+class CategoryListPage(BaseListPage):
+    template_name = 'flatpages/category/category.html'
+
+    def get_queryset(self):
+        return News.objects.filter(category=self.kwargs['pk']).order_by("-published_at")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category"] = Category.objects.get(id=self.kwargs['pk'])
+        return context
+
+
+class OriginListPage(BaseListPage):
     template_name = 'flatpages/origin/origin.html'
-    context_object_name = "news_list"
-    paginate_by = 5
-    week_ago = datetime.now() - timedelta(days=7)
 
     def get_queryset(self):
         return News.objects.filter(parsed_from=self.kwargs['pk']).order_by("-published_at")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context["origin_"] = Origin.objects.get(id=self.kwargs['pk'])
-        context["origins"] = Origin.objects.all().order_by("id")
-        context["categories"] = Category.objects.all().order_by("id", "-rating")[:15]
-        context["tags"] = Tag.objects.all().order_by("id", "-rating")[:15]
+        context["origin"] = Origin.objects.get(id=self.kwargs['pk'])
+        return context
 
-        context["latest_news"] = News.objects.all().order_by("-published_at")[:6]
-        context["trending_news"] = News.objects.all().filter(published_at__gte=self.week_ago).order_by('-rating')[:6]
-        context["interesting_news"] = News.objects.all().order_by('-rating')[:6]
 
+class ContactPage(TemplateView):
+    template_name = 'flatpages/contacts/contacts.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all().order_by("-rating")
+        context["origins"] = Origin.objects.all()
+        context["latest_news"] = News.objects.all().order_by("-id")[:7]
+        return context
+
+
+class About(TemplateView):
+    template_name = 'flatpages/about/about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all().order_by("-rating")
+        context["origins"] = Origin.objects.all()
+        context["latest_news"] = News.objects.all().order_by("-id")[:7]
         return context
