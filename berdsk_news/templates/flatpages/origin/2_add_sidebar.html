@@ -22,7 +22,7 @@
       {% for interesting in interesting_news %}
       <div class="post-entry-1 border-bottom">
         <div class="post-meta"><span class="date">{{ interesting.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ interesting.published_at|date:"Y M d D G:i" }}</span></div>
-        <h2 class="mb-2"><a href="{{ interesting.id }}">{{ interesting.title }}</a></h2>
+        <h2 class="mb-2"><a href="/news/{{ interesting.id }}">{{ interesting.title }}</a></h2>
         <span class="author mb-3 d-block">{{ interesting.parsed_from.name }}</span>
       </div>
       {% endfor %}
@@ -33,7 +33,7 @@
       {% for trending in trending_news %}
       <div class="post-entry-1 border-bottom">
         <div class="post-meta"><span class="date">{{ trending.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ trending.published_at|date:"Y M d D G:i" }}</span></div>
-        <h2 class="mb-2"><a href="{{ trending.id }}">{{ trending.title }}</a></h2>
+        <h2 class="mb-2"><a href="/news/{{ trending.id }}">{{ trending.title }}</a></h2>
         <span class="author mb-3 d-block">{{ trending.parsed_from.name }}</span>
       </div>
       {% endfor %}
@@ -44,7 +44,7 @@
       {% for latest in latest_news %}
       <div class="post-entry-1 border-bottom">
         <div class="post-meta"><span class="date">{{ latest.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ latest.published_at|date:"Y M d D G:i" }}</span></div>
-        <h2 class="mb-2"><a href="{{ latest.id }}">{{ latest.title }}</a></h2>
+        <h2 class="mb-2"><a href="/news/{{ latest.id }}">{{ latest.title }}</a></h2>
         <span class="author mb-3 d-block">{{ latest.parsed_from.name }}</span>
       </div>
       {% endfor %}
@@ -52,5 +52,37 @@
 
   </div>
 </div>
+
+
+<div class="aside-block">
+  <h3 class="aside-title">Видео</h3>
+  <div class="video-post">
+    <a href="https://www.youtube.com/watch?v=AiFfDjmd0jU" class="glightbox link-video">
+      <span class="bi-play-fill"></span>
+      <img src="/static/img/post-landscape-5.jpg" alt="" class="img-fluid">
+    </a>
+  </div>
+</div>
+<!-- End Video -->
+
+<div class="aside-block">
+  <h3 class="aside-title">Категории</h3>
+  <ul class="aside-links list-unstyled">
+    {% for category in categories %}
+      <li><a href="/news/category/{{ category.id }}"><i class="bi bi-chevron-right"></i> {{ category.name }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+<!-- End Categories -->
+
+<div class="aside-block">
+  <h3 class="aside-title">Тэги</h3>
+  <ul class="aside-tags list-unstyled">
+    {% for tag in tags %}
+      <li><a href="/news/tag/{{ tag.id }}">{{ tag.name }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+<!-- End Tags -->
 
 {% endblock sidebar %}

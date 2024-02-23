@@ -1,0 +1,28 @@
+{% extends 'flatpages/category/3_add_pagination.html' %}
+
+
+{% block category_list %}
+{% for origin in origins %}
+
+<!-- ======= Category Section ======= -->
+<!--<section class="category-section">-->
+<!--  <div class="container" data-aos="fade-up">-->
+
+<!--    <div class="section-header d-flex justify-content-between align-items-center mb-5">-->
+<div class="d-flex align-items-center author">
+    <div class="photo"><img src="{{ origin.icon_url }}" alt="" class="img-fluid"></div>
+    <h2><a href="/news/origin/{{ origin.id }}">{{ origin.name }}</a></h2>
+</div>
+<!--            Все новости в категории -->
+<!--          <div><a href="/news/category/{{ category.id }}" class="more">Все новости в категории {{ category.name }}</a></div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--</section>-->
+<!-- End Culture Category Section -->
+
+{% endfor %}
+{% endblock category_list %}
+
+{% block sidebar %}
+{% endblock sidebar %}
