@@ -45,7 +45,7 @@ class Author(models.Model):
         return ''
 
     def __str__(self):
-        return f"{self.user}: rating {self.rating}"
+        return f"{self.first_name, self.last_name}: rating {self.rating}"
 
 
 class Category(models.Model):
@@ -158,44 +158,20 @@ class NewsTag(models.Model):
         unique_together = ('news', 'tag',)
 
 
-# class NewsPhotos(models.Model):
-#     news = models.ForeignKey(News, on_delete=models.CASCADE)
-#     photo = models.ForeignKey(Photo, on_delete=models.CASCADE)
-
-
-# class Comment(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     news = models.ForeignKey(News, on_delete=models.CASCADE)
-#     answer = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
-#     text = models.TextField()
-#     date_time = models.DateTimeField(auto_now_add=True)
-#     rating = models.IntegerField(default=0)
-#
-#     def like(self):
-#         self.rating += 1
-#         self.save()
-#         return ''
-#
-#     def dislike(self):
-#         self.rating -= 1
-#         self.save()
-#         return ''
-#
-#
-# class CmntToCmnt(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
-#     # comment_to_cmnt = models.ForeignKey('self', on_delete=models.CASCADE, default=' ')
-#     text = models.TextField()
-#     date_time = models.DateTimeField(auto_now_add=True)
-#     rating = models.IntegerField(null=False, default=0)
-
-
 class Advertiser(models.Model):
     name = models.TextField(default='')
     phone = models.CharField(max_length=20, default='')
-    address = models.TextField(default='')
-    email = models.EmailField(default='bushuev-alex@mail.ru')
+    email = models.EmailField(default='')
+    subject = models.TextField(default='')
+    text = models.TextField(null=False, default='')
+    company_name = models.CharField(null=True, default='')
+    address = models.TextField(null=True, default='')
+
+    rating = models.IntegerField(default=0)
+
+    def click(self):
+        self.rating += 1
+        self.save()
 
 
 class Advertisement(models.Model):
@@ -205,10 +181,14 @@ class Advertisement(models.Model):
     link = models.URLField()
     advertiser = models.ForeignKey(Advertiser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    expire_after = models.TimeField()
+    # expire_after = models.TimeField()
     price = models.FloatField(default=0.0)
     rating = models.IntegerField(default=0)
 
     def click(self):
         self.rating += 1
         self.save()
+
+
+class Search(models.Model):
+    search = models.CharField(max_length=30)
