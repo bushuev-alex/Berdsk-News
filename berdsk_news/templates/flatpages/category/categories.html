@@ -1,0 +1,25 @@
+{% extends 'flatpages/category/3_add_pagination.html' %}
+
+
+{% block category_list %}
+{% for category in categories %}
+
+<!-- ======= Category Section ======= -->
+<!--<section class="category-section">-->
+<!--  <div class="container" data-aos="fade-up">-->
+
+<!--    <div class="section-header d-flex justify-content-between align-items-center mb-5">-->
+      <h2><a href="/news/category/{{ category.id }}">{{ category.name }}</a></h2>
+<!--            Все новости в категории -->
+<!--          <div><a href="/news/category/{{ category.id }}" class="more">Все новости в категории {{ category.name }}</a></div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--</section>-->
+<!-- End Culture Category Section -->
+
+{% endfor %}
+{% endblock category_list %}
+
+{% block sidebar %}
+{% endblock sidebar %}
