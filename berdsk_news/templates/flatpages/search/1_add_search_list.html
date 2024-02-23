@@ -1,0 +1,37 @@
+{% extends 'flatpages/search/0_add_intermediate.html' %}
+
+{% block search_list %}
+<div class="col-md-9" data-aos="fade-up">
+  <h3 class="category-title">Поиск: {{ search_word }}</h3>
+
+  {% for news in news_list %}
+  <div class="d-md-flex post-entry-2 half">
+    <a href="single-post.html" class="me-4 thumbnail">
+      <img src="{{ news.title_image_url }}" alt="" class="img-fluid">
+    </a>
+    <div>
+      <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.published_at|date:"Y M d D G:i" }}</span></div>
+      <h3><a href="/news/{{ news.id }}">{{ news.title }}</a></h3>
+      <p>{{ news.brief_text|truncatewords:20 }}</p>
+      <div class="d-flex align-items-center author">
+        <div class="photo"><img src="{{ news.parsed_from.icon_url }}" alt="" class="img-fluid"></div>
+        <div class="name">
+          <h3 class="m-0 p-0"><a href="{{ news.full_text_link }}" target="_blank">Читать в источнике {{ news.parsed_from.name }}</a> </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+
+
+    <div class="text-start py-4">
+      <div class="custom-pagination">
+
+        {% block pagination %}
+        {% endblock pagination %}
+
+      </div>
+    </div>
+  </div>
+{% endblock search_list %}

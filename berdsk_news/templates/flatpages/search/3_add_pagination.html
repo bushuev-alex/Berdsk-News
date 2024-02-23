@@ -1,0 +1,48 @@
+{% extends 'flatpages/search/2_add_sidebar.html' %}
+
+
+{% block pagination %}
+
+{% if page_obj.has_previous %}
+<a href="?page={{ page_obj.previous_page_number }}" class="prev">Назад</a>
+
+  {% if page_obj.previous_page_number == 1 %}
+    <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+  {% endif %}
+  {% if page_obj.previous_page_number == 2 %}
+    <a href="?page={{ page_obj.previous_page_number|add:'-1' }}">{{ page_obj.previous_page_number|add:'-1' }}</a>
+    <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+  {% endif %}
+  {% if page_obj.previous_page_number > 2 %}
+    <a href="?page=1">1</a>
+    <a href="#">...</a>
+    <a href="?page={{ page_obj.previous_page_number|add:'-1' }}">{{ page_obj.previous_page_number|add:'-1' }}</a>
+    <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+  {% endif %}
+
+{% endif %}
+
+
+<a href="{{ page_obj.number }}" class="active">{{ page_obj.number }}</a>
+
+
+{% if page_obj.has_next %}
+
+    {% if page_obj.next_page_number == paginator.num_pages %}
+      <a href="?page={{ page_obj.next_page_number }}" >{{ page_obj.next_page_number }}</a>
+    {% endif %}
+    {% if page_obj.next_page_number == paginator.num_pages|add:'-1' %}
+      <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+      <a href="?page={{ page_obj.next_page_number|add:'1' }}">{{ page_obj.next_page_number|add:'1' }}</a>
+    {% endif %}
+    {% if page_obj.next_page_number < paginator.num_pages|add:'-1' %}
+      <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+      <a href="?page={{ page_obj.next_page_number|add:'1' }}">{{ page_obj.next_page_number|add:'1' }}</a>
+      <a href="#">...</a>
+      <a href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
+    {% endif %}
+
+  <a href="?page={{ page_obj.next_page_number }}" class="next">Вперед</a>
+{% endif %}
+
+{% endblock pagination %}
