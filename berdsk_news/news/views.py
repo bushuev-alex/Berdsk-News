@@ -1,6 +1,12 @@
+import time
+
+from django.views.generic import ListView, TemplateView  # , DetailView, CreateView, UpdateView, DeleteView,
+from django.contrib import messages
+from django.shortcuts import render, reverse, redirect, get_object_or_404
+from django.http import HttpResponseRedirect, HttpResponse  # Http404
+
 # from django.shortcuts import render
 # from django.template.loader import render_to_string
-from django.views.generic import ListView, TemplateView  # , DetailView, CreateView, UpdateView, DeleteView,
 # from django.contrib.auth.decorators import login_required
 # from django.utils.decorators import method_decorator
 # from django.utils.translation import gettext
@@ -9,16 +15,15 @@ from django.views.generic import ListView, TemplateView  # , DetailView, CreateV
 # from django.contrib.auth.models import User
 # from django.contrib.auth import get_user_model
 # from django.urls import reverse, reverse_lazy
-# from django.http import Http404, HttpResponse
 # from django.views import View
-# from django.shortcuts import render, reverse, redirect, get_object_or_404
-# from django.conf import settings
 
-from datetime import datetime, timedelta, timezone
+# from django.conf import settings
 # from pprint import pprint
 # import pytz
 
+from datetime import datetime, timedelta, timezone
 from .models import News, Category, Origin, Tag  # , Comment
+from news.forms import AdForm
 
 
 class MainPage(TemplateView):
@@ -30,7 +35,7 @@ class MainPage(TemplateView):
         context["categories"] = Category.objects.all().order_by("-rating")
         context["origins"] = Origin.objects.all()
         context["latest_news"] = News.objects.all().order_by("-id")[:7]
-        trending_news = News.objects.all().filter(published_at__gte=self.week_ago).order_by('-rating')[:5]
+        trending_news = News.objects.all().filter(published_at__gte=self.week_ago).order_by('-rating')[:6]
         context["enum_trending_news"] = enumerate(trending_news)
         return context
 
@@ -39,8 +44,15 @@ class DetailPage(TemplateView):
     template_name = 'flatpages/single_post/single-post.html'
     week_ago = datetime.now() - timedelta(days=7)
 
+    # def get(self):
+    #     pass
+
     def get_context_data(self, **kwargs):
-        pk = kwargs['pk']
+        try:
+            pk = kwargs['pk']
+            News.objects.get(id=pk)
+        except News.DoesNotExist:
+            pk = News.objects.latest("pk").id
         context = super().get_context_data(**kwargs)
         context["single_news"] = News.objects.get(id=pk)
         # context["comments"] = Comment.objects.filter(news_id=pk)  # .order_by("id")
@@ -92,6 +104,16 @@ class CategoryListPage(BaseListPage):
         return context
 
 
+class AllCategoriesListPage(TemplateView):
+    template_name = 'flatpages/category/categories.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        context["latest_news"] = News.objects.all().order_by("-id")[:7]
+        return context
+
+
 class OriginListPage(BaseListPage):
     template_name = 'flatpages/origin/origin.html'
 
@@ -101,6 +123,16 @@ class OriginListPage(BaseListPage):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["origin"] = Origin.objects.get(id=self.kwargs['pk'])
+        return context
+
+
+class AllOriginsListPage(TemplateView):
+    template_name = 'flatpages/origin/origins.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["origins"] = Origin.objects.all()
+        context["latest_news"] = News.objects.all().order_by("-id")[:7]
         return context
 
 
@@ -114,6 +146,19 @@ class ContactPage(TemplateView):
         context["latest_news"] = News.objects.all().order_by("-id")[:7]
         return context
 
+    def post(self, request, *args, **kwargs):
+        form = AdForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(self.request, message="Ваше сообщение отправлено. Спасибо!")  # HttpResponse("Ваше сообщение отправлено. Спасибо!")
+            return HttpResponseRedirect("/contacts")
+        else:
+            print(form.cleaned_data)
+            print(form.errors.values())
+            for error in list(form.errors.values()):
+                messages.error(self.request, message=error)  # HttpResponse("Неверные данные")
+            return HttpResponseRedirect("/contacts")
+
 
 class About(TemplateView):
     template_name = 'flatpages/about/about.html'
@@ -124,3 +169,25 @@ class About(TemplateView):
         context["origins"] = Origin.objects.all()
         context["latest_news"] = News.objects.all().order_by("-id")[:7]
         return context
+
+
+class SearchListPage(BaseListPage):
+
+    template_name = 'flatpages/search/search.html'
+
+    def get_queryset(self):
+        search_word = self.kwargs["search_word"]
+        print(self.kwargs)
+        print(search_word)
+        return News.objects.filter(full_text__icontains=search_word).order_by("-id")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search_word"] = self.kwargs["search_word"]
+        # context["search_result"] = Category.objects.get(id=self.kwargs['pk'])
+        return context
+
+
+def redirect_to_search_result(request, **kwargs):
+    search_word: str = request.GET["search_word"]
+    return redirect(to=f"/news/search/{search_word}/")
