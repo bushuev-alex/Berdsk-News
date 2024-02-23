@@ -40,31 +40,31 @@
               </li>
             </ul>
           </li>
-          <li><a href="/about/">О компании</a></li>
+<!--          <li><a href="/about/">О компании</a></li>-->
           <li><a href="/contacts/">Рекламодателям</a></li>
         </ul>
       </nav><!-- .navbar -->
 
-      <script async src="https://usocial.pro/usocial/usocial.js?uid=a7bc540e89f74244&v=6.1.5" data-script="usocial" charset="utf-8"></script>
-      <!-- uSocial -->
-      <script async src="https://usocial.pro/usocial/usocial.js?uid=2b693ec57df74244&v=6.1.5" data-script="usocial" charset="utf-8"></script>
-      <div class="uSocial-Share" data-pid="65993eecd17c315898dc08c5f8be400b" data-type="share" data-options="round,style4,default,absolute,horizontal,size32,counter1,counter-after,mobile_position_right" data-social="telegram,wa,vk,ok,email"></div>
-      <!-- /uSocial -->
+
 
       <div class="position-relative">
 
-        <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+        <a href="/news/search/" class="mx-2 js-search-open"><span class="bi-search"></span></a>
 
         <i class="bi bi-list mobile-nav-toggle"></i>
 
         <!-- ======= Search Form ======= -->
         <div class="search-form-wrap js-search-form-wrap">
-          <form action="search-result.html" class="search-form">
-            <span class="icon bi-search"></span>
-            <input type="text" placeholder="Поиск" class="form-control">
-            <button class="btn js-search-close"><span class="bi-x"></span></button>
-          </form>
-        </div><!-- End Search Form -->
+        <form action="/news/search/" class="search-form">
+          <span class="icon bi-search"></span>
+          <input type="text" name="search_word" id="id_search" value="" minlength="2" maxlength="30">
+          <button type="submit" class="btn">OK</button>
+          <button class="btn js-search-close"><span class="bi-x" hidden></span></button>
+        </form>
+        </div>
+        <!-- End Search Form -->
+
+
 
       </div>
 
