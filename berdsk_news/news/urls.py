@@ -16,15 +16,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
 
-from news.views import MainPage, DetailPage, CategoryListPage, OriginListPage, ContactPage, About
+from news.views import (MainPage,
+                        DetailPage,
+                        CategoryListPage,
+                        OriginListPage,
+                        ContactPage,
+                        About,
+                        AllCategoriesListPage,
+                        AllOriginsListPage,
+                        SearchListPage,
+                        redirect_to_search_result)
 
 urlpatterns = [
     path("news/", MainPage.as_view(), name='news'),
+    path("news/search/", redirect_to_search_result, name='to_search_result'),
+    path("news/search//", lambda request: redirect("/contacts/")),
+    path("news/search/<str:search_word>/", SearchListPage.as_view(), name='search_result'),
     path("news/<int:pk>/", DetailPage.as_view(), name='news_by_id'),
-    path("news/categories/", ContactPage.as_view(), name='contacts'),
+    path("news/categories/", AllCategoriesListPage.as_view(), name='categories'),
     path("news/category/<int:pk>/", CategoryListPage.as_view(), name='category'),
-    path("news/origins/", ContactPage.as_view(), name='contacts'),
+    path("news/origins/", AllOriginsListPage.as_view(), name='origins'),
     path("news/origin/<int:pk>/", OriginListPage.as_view(), name='origin'),
     path("contacts/", ContactPage.as_view(), name='contacts'),
     path("about/", About.as_view(), name='about')
