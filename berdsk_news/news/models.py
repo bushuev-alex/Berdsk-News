@@ -175,7 +175,7 @@ class Advertiser(models.Model):
 
 
 class Advertisement(models.Model):
-    photo = models.ImageField(default='')
+    images_urls = models.TextField(default='', null=True)
     name = models.TextField(default='')
     description = models.TextField(default='')
     link = models.URLField()
@@ -188,6 +188,9 @@ class Advertisement(models.Model):
     def click(self):
         self.rating += 1
         self.save()
+
+    def get_images_urls(self) -> list:
+        return self.images_urls.split()
 
 
 class Search(models.Model):
