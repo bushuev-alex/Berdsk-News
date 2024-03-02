@@ -1,0 +1,24 @@
+{% extends 'flatpages/3_add_footer.html' %}
+
+{% block content %}
+
+<section>
+  <div class="container">
+    <div class="row">
+
+      {% block tag_list %}
+      {% endblock tag_list %}
+
+      <div class="col-md-3">
+
+        {% block sidebar %}
+        {% endblock sidebar %}
+
+
+
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock content %}

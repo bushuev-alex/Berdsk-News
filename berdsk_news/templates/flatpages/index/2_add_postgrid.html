@@ -8,13 +8,13 @@
         <div class="row g-5">
           <div class="col-lg-4">
             <div class="post-entry-1 lg">
-              <a href="{{ latest_news.0.pk }}"><img src="{{ latest_news.0.title_image_url }}" alt="" class="img-fluid"></a>
+              <a href="{{ latest_news.0.pk }}"><img src="{{ latest_news.0.title_image_url }}" loading="lazy" alt="" class="img-fluid"></a>
               <div class="post-meta"><span class="date">{{ latest_news.0.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ latest_news.0.published_at|date:"Y M d D G:i" }}</span></div>
               <h2><a href="{{ latest_news.0.pk }}">{{ latest_news.0.title }}</a></h2>
               <p class="mb-4 d-block">{{ latest_news.0.brief_text|truncatewords:40 }}</p>
 
               <div class="d-flex align-items-center author">
-                <div class="photo"><img src="{{ latest_news.0.parsed_from.icon_url }}" alt="" class="img-fluid"></div>
+                <div class="photo"><img src="{{ latest_news.0.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid"></div>
                 <div class="name">
                   <h3 class="m-0 p-0">{{ latest_news.0.parsed_from.name }}</h3>
                 </div>
@@ -27,7 +27,7 @@
               <div class="col-lg-4 border-start custom-border">
                 {% for news in latest_news|slice:"1:4" %}
                 <div class="post-entry-1">
-                  <a href="{{ news.pk }}"><img src="{{ news.title_image_url }}" alt="" class="img-fluid"></a>
+                  <a href="{{ news.pk }}"><img src="{{ news.title_image_url }}" loading="lazy" alt="" class="img-fluid"></a>
                   <div class="post-meta"><span class="date">{{ news.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.published_at|date:"Y M d D G:i" }}</span></div>
                   <h2><a href="{{ news.pk }}">{{ news.title }}</a></h2>
                 </div>
@@ -37,7 +37,7 @@
               <div class="col-lg-4 border-start custom-border">
                 {% for news in latest_news|slice:"4:" %}
                 <div class="post-entry-1">
-                  <a href="{{ news.pk }}"><img src="{{ news.title_image_url }}" alt="" class="img-fluid"></a>
+                  <a href="{{ news.pk }}"><img src="{{ news.title_image_url }}" loading="lazy" alt="" class="img-fluid"></a>
                   <div class="post-meta"><span class="date">{{ news.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news.published_at|date:"Y M d D G:i" }}</span></div>
                   <h2><a href="{{ news.pk }}">{{ news.title }}</a></h2>
                 </div>

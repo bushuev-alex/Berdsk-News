@@ -27,6 +27,19 @@
               </li>
             </ul>
           </li>
+          <li class="dropdown"><a href="/news/tags/"><span>Тэги</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+              <ul>
+                {% for tag in tags|slice:":15" %}
+                  <li><a href="/news/tag/{{ tag.id }}/">{{ tag.name }}</a></li>
+                  <ul>
+                    {% for undercat in tag.name %}
+                      <li><a href="#">Подкатегория 1</a></li>
+                    {% endfor %}
+                  </ul>
+                {% endfor %}
+                </li>
+              </ul>
+            </li>
           <li class="dropdown"><a href="/news/origins/"><span>Источники</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               {% for origin in origins %}

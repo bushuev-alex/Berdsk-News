@@ -13,7 +13,7 @@
         <span class="number">{{ number|add:"1" }}</span>
         <h3>{{ news.title }}</h3>
         <div class="d-flex align-items-center author">
-                  <div class="photo"><img src="{{ news.parsed_from.icon_url }}" alt="" class="img-fluid"></div>
+                  <div class="photo"><img src="{{ news.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid"></div>
                   <div class="name">
                     <h3 class="m-0 p-0">{{ news.parsed_from.name }}</h3>
                   </div>

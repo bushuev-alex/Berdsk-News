@@ -19,14 +19,14 @@
 
             <div class="d-lg-flex post-entry-2">
               <a href="{{ news_qs.0.id }}" class="me-4 thumbnail mb-4 mb-lg-0 d-inline-block">
-                <img src="{{ news_qs.0.title_image_url }}" alt="" class="img-fluid">
+                <img src="{{ news_qs.0.title_image_url }}" loading="lazy" alt="" class="img-fluid">
               </a>
               <div>
                 <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.0.published_at|date:"Y-m-d D H:i" }}</span></div>
                 <h3><a href="{{ news_qs.0.id }}">{{ news_qs.0.title }}</a></h3>
                 <p>{{ news_qs.0.brief_text|truncatewords:20 }}</p>
                 <div class="d-flex align-items-center author">
-                  <div class="photo"><img src="{{ news_qs.0.parsed_from.icon_url }}" alt="" class="img-fluid"></div>
+                  <div class="photo"><img src="{{ news_qs.0.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid"></div>
                   <div class="name">
                     <h3 class="m-0 p-0">{{ news_qs.0.parsed_from.name }}</h3>
                   </div>
@@ -37,7 +37,7 @@
             <div class="row">
               <div class="col-lg-4">
                 <div class="post-entry-1 border-bottom">
-                  <a href="{{ news_qs.1.id }}"><img src="{{ news_qs.1.title_image_url }}" alt="" class="img-fluid"></a>
+                  <a href="{{ news_qs.1.id }}"><img src="{{ news_qs.1.title_image_url }}" loading="lazy" alt="" class="img-fluid"></a>
                   <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.1.published_at|date:"Y M d D G:i" }}</span></div>
                   <h2 class="mb-2"><a href="{{ news_qs.1.id }}">{{ news_qs.1.title }}</a></h2>
                   <span class="author mb-3 d-block">{{ news_qs.1.parsed_from.name }} </span>
@@ -52,7 +52,7 @@
               </div>
               <div class="col-lg-8">
                 <div class="post-entry-1">
-                  <a href="{{ news_qs.3.id }}"><img src="{{ news_qs.3.title_image_url }}" alt="" class="img-fluid"></a>
+                  <a href="{{ news_qs.3.id }}"><img src="{{ news_qs.3.title_image_url }}" loading="lazy" alt="" class="img-fluid"></a>
                   <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.3.published_at|date:"Y M d D G:i" }}</span></div>
                   <h2 class="mb-2"><a href="{{ news_qs.3.id }}">{{ news_qs.3.title }}</a></h2>
                   <span class="author mb-3 d-block">{{ news_qs.3.parsed_from.name }} </span>
@@ -70,7 +70,7 @@
               <h2 class="mb-2"><a href="{{ news.id }}">{{ news.title }}</a></h2>
 <!--              <span class="author mb-3 d-block">{{ news.parsed_from.name }} </span>-->
               <div class="d-flex align-items-center author">
-                  <div class="photo"><img src="{{ news.parsed_from.icon_url }}" alt="" class="img-fluid"></div>
+                  <div class="photo"><img src="{{ news.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid"></div>
                   <div class="name">
                     <h3 class="m-0 p-0">{{ news.parsed_from.name }}</h3>
                   </div>
