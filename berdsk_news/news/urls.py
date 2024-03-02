@@ -27,7 +27,9 @@ from news.views import (MainPage,
                         AllCategoriesListPage,
                         AllOriginsListPage,
                         SearchListPage,
-                        redirect_to_search_result)
+                        redirect_to_search_result,
+                        AllTagsListPage,
+                        TagListPage)
 
 urlpatterns = [
     path("news/", MainPage.as_view(), name='news'),
@@ -37,6 +39,8 @@ urlpatterns = [
     path("news/<int:pk>/", DetailPage.as_view(), name='news_by_id'),
     path("news/categories/", AllCategoriesListPage.as_view(), name='categories'),
     path("news/category/<int:pk>/", CategoryListPage.as_view(), name='category'),
+    path("news/tags/", AllTagsListPage.as_view(), name='tags'),
+    path("news/tag/<int:pk>/", TagListPage.as_view(), name='tag'),
     path("news/origins/", AllOriginsListPage.as_view(), name='origins'),
     path("news/origin/<int:pk>/", OriginListPage.as_view(), name='origin'),
     path("contacts/", ContactPage.as_view(), name='contacts'),
