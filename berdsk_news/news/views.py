@@ -22,7 +22,7 @@ from django.http import HttpResponseRedirect, HttpResponse  # Http404
 # import pytz
 
 from datetime import datetime, timedelta, timezone
-from .models import News, Category, Origin, Tag  # , Comment
+from .models import News, Category, Origin, Tag, Advertisement  # , Comment
 from news.forms import AdForm
 
 
@@ -33,8 +33,10 @@ class MainPage(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all().order_by("-rating")
+        context["tags"] = Tag.objects.all().order_by("-rating")
         context["origins"] = Origin.objects.all()
         context["latest_news"] = News.objects.all().order_by("-id")[:7]
+        context["advertisements"] = Advertisement.objects.all()
         trending_news = News.objects.all().filter(published_at__gte=self.week_ago).order_by('-rating')[:6]
         context["enum_trending_news"] = enumerate(trending_news)
         return context
@@ -109,7 +111,33 @@ class AllCategoriesListPage(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["tags"] = Tag.objects.all()
         context["categories"] = Category.objects.all()
+        context["origins"] = Origin.objects.all()
+        context["latest_news"] = News.objects.all().order_by("-id")[:7]
+        return context
+
+
+class TagListPage(BaseListPage):
+    template_name = 'flatpages/tag/tag.html'
+
+    def get_queryset(self):
+        return News.objects.filter(tag=self.kwargs['pk']).order_by("-published_at")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tag"] = Tag.objects.get(id=self.kwargs['pk'])
+        return context
+
+
+class AllTagsListPage(TemplateView):
+    template_name = 'flatpages/tag/tags.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tags"] = Tag.objects.all()
+        context["categories"] = Category.objects.all()
+        context["origins"] = Origin.objects.all()
         context["latest_news"] = News.objects.all().order_by("-id")[:7]
         return context
 
@@ -131,6 +159,8 @@ class AllOriginsListPage(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["tags"] = Tag.objects.all()
+        context["categories"] = Category.objects.all()
         context["origins"] = Origin.objects.all()
         context["latest_news"] = News.objects.all().order_by("-id")[:7]
         return context
@@ -143,6 +173,7 @@ class ContactPage(TemplateView):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all().order_by("-rating")
         context["origins"] = Origin.objects.all()
+        context["tags"] = Tag.objects.all()
         context["latest_news"] = News.objects.all().order_by("-id")[:7]
         return context
 
