@@ -18,7 +18,6 @@ from config import DJ_SCRT_KEY, DB_HOST, DB_PORT, DB_PASS, DB_NAME, DB_LOGIN
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -29,7 +28,6 @@ SECRET_KEY = DJ_SCRT_KEY
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-
 
 # Application definition
 
@@ -83,7 +81,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "berdsk_news.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -101,7 +98,6 @@ DATABASES = {
         'PORT': DB_PORT,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -121,7 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -132,7 +127,6 @@ TIME_ZONE = "Asia/Novosibirsk"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -161,11 +155,16 @@ LOGGING = {'version': 1,
            'filters': {'require_debug_true': {'()': 'django.utils.log.RequireDebugTrue'},
                        'require_debug_false': {'()': 'django.utils.log.RequireDebugFalse'},
                        },
-           'handlers': {'INFO_file': {'level': 'INFO',
-                                      'filters': ['require_debug_false'],
+           'handlers': {'INFO': {'level': 'INFO',
+                                 'filters': ['require_debug_true'],
+                                 'class': 'logging.StreamHandler',
+                                 'formatter': 'all'
+                                 },
+                        'INFO_file': {'level': 'INFO',
+                                      'filters': ['require_debug_true'],
                                       'class': 'logging.FileHandler',
                                       'filename': 'general.log',
-                                      'formatter': 'info'
+                                      'formatter': 'all'
                                       },
                         'DEBUG': {'level': 'DEBUG',
                                   'filters': ['require_debug_true'],
@@ -216,7 +215,7 @@ LOGGING = {'version': 1,
                                   },
                        'django.request': {'handlers': ['mail_admins', 'ERROR_file', 'CRITICAL_file'],
                                           'level': 'ERROR',
-                                          'propagate': False,
+                                          'propagate': True,
                                           },
                        'django.server': {'handlers': ['mail_admins', 'ERROR_file', 'CRITICAL_file']},
                        'django.template': {'handlers': ['ERROR_file', 'CRITICAL_file']},
@@ -224,4 +223,3 @@ LOGGING = {'version': 1,
                        'django.security': {'handlers': ['SEC_file']}
                        }
            }
-
