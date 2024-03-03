@@ -1,2 +1,3 @@
 /berdsk_news/parser/scrapy.cfg
 /berdsk_news/.env
+/berdsk_news/parser/celery_funcs.py
