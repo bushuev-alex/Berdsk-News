@@ -17,20 +17,20 @@ class NGSSpider(scrapy.Spider):
 
     start_urls = [f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
                   f"&dateTo={today.day}.{today.month}.{today.year}&page=1",
-                  # f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
-                  # f"&dateTo={today.day}.{today.month}.{today.year}&page=2",
-                  # f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
-                  # f"&dateTo={today.day}.{today.month}.{today.year}&page=3",
-                  # f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
-                  # f"&dateTo={today.day}.{today.month}.{today.year}&page=4",
-                  # f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
-                  # f"&dateTo={today.day}.{today.month}.{today.year}&page=5",
-                  # f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
-                  # f"&dateTo={today.day}.{today.month}.{today.year}&page=6",
+                  f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
+                  f"&dateTo={today.day}.{today.month}.{today.year}&page=2",
+                  f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
+                  f"&dateTo={today.day}.{today.month}.{today.year}&page=3",
+                  f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
+                  f"&dateTo={today.day}.{today.month}.{today.year}&page=4",
+                  f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
+                  f"&dateTo={today.day}.{today.month}.{today.year}&page=5",
+                  f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
+                  f"&dateTo={today.day}.{today.month}.{today.year}&page=6",
                   ]
 
     async def parse(self, response, **kwargs):
-        target_script_content = response.css("script")[38].get()
+        target_script_content = response.css("script")[39].get()
         raw_urls: list[str] = re.findall(
             pattern=r"urlCanonical\":\"(https:\\u002F\\u002Fngs.ru\\u002F"
                     r"text\\u002F\w+\\u002F\d{4}\\u002F\d{2}\\u002F\d{2}\\u002F\d{8}\\u002F)\",",
@@ -38,6 +38,7 @@ class NGSSpider(scrapy.Spider):
         # 1st var: r"\\u002Ftext\\u002F\w+"\\u002F\d{4}\\u002F\d{2}\\u002F\d{2}\\u002F\d{8}",
 
         links = [url.replace("\\u002F", "/") for url in raw_urls]
+        print(links)
 
         for link in links:
             try:
