@@ -23,7 +23,7 @@
   </figure>
 
   {% for p in single_news.split_by_XYWZ %}
-    {% if 'Ранее мы' not in p and 'Напомним, что' and 'Ранее НГС' not in p %}
+    {% if 'Ранее мы' not in p and 'Напомним, что' not in p and 'Ранее НГС' not in p and 'Также напомним, что' not in p and 'Ранее «Континент Сибирь»' not in p %}
     <p>{{ p }}</p>
     {% endif %}
   {% endfor %}
