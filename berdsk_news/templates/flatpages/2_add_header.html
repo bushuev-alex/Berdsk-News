@@ -20,7 +20,7 @@
                 <li><a href="/news/category/{{ category.id }}/">{{ category.name }}</a></li>
                 <ul>
                   {% for undercat in category.name %}
-                    <li><a href="#">Подкатегория 1</a></li>
+                    <li><a href="#">{{ undercat }}</a></li>
                   {% endfor %}
                 </ul>
               {% endfor %}
@@ -33,7 +33,7 @@
                   <li><a href="/news/tag/{{ tag.id }}/">{{ tag.name }}</a></li>
                   <ul>
                     {% for undercat in tag.name %}
-                      <li><a href="#">Подкатегория 1</a></li>
+                      <li><a href="#">{{ undercat }}</a></li>
                     {% endfor %}
                   </ul>
                 {% endfor %}
@@ -46,7 +46,7 @@
                 <li><a href="/news/origin/{{ origin.id }}/">{{ origin.name }}</a></li>
                 <ul>
                   {% for undercat in origin.name %}
-                    <li><a href="#">Подкатегория 1</a></li>
+                    <li><a href="#">{{ undercat }}</a></li>
                   {% endfor %}
                 </ul>
               {% endfor %}
