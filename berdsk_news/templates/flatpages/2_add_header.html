@@ -18,11 +18,11 @@
             <ul>
               {% for category in categories|slice:":15" %}
                 <li><a href="/news/category/{{ category.id }}/">{{ category.name }}</a></li>
-                <ul>
-                  {% for undercat in category.name %}
-                    <li><a href="#">{{ undercat }}</a></li>
-                  {% endfor %}
-                </ul>
+<!--                <ul>-->
+<!--                  {% for undercat in category.name %}-->
+<!--                    <li><a href="#">{{ undercat }}</a></li>-->
+<!--                  {% endfor %}-->
+<!--                </ul>-->
               {% endfor %}
               </li>
             </ul>
@@ -31,11 +31,11 @@
               <ul>
                 {% for tag in tags|slice:":15" %}
                   <li><a href="/news/tag/{{ tag.id }}/">{{ tag.name }}</a></li>
-                  <ul>
-                    {% for undercat in tag.name %}
-                      <li><a href="#">{{ undercat }}</a></li>
-                    {% endfor %}
-                  </ul>
+<!--                  <ul>-->
+<!--                    {% for undercat in tag.name %}-->
+<!--                      <li><a href="#">{{ undercat }}</a></li>-->
+<!--                    {% endfor %}-->
+<!--                  </ul>-->
                 {% endfor %}
                 </li>
               </ul>
@@ -44,11 +44,11 @@
             <ul>
               {% for origin in origins %}
                 <li><a href="/news/origin/{{ origin.id }}/">{{ origin.name }}</a></li>
-                <ul>
-                  {% for undercat in origin.name %}
-                    <li><a href="#">{{ undercat }}</a></li>
-                  {% endfor %}
-                </ul>
+<!--                <ul>-->
+<!--                  {% for undercat in origin.name %}-->
+<!--                    <li><a href="#">{{ undercat }}</a></li>-->
+<!--                  {% endfor %}-->
+<!--                </ul>-->
               {% endfor %}
               </li>
             </ul>
