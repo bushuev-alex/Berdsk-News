@@ -19,14 +19,14 @@ class NGSSpider(scrapy.Spider):
                   f"&dateTo={today.day}.{today.month}.{today.year}&page=1",
                   f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
                   f"&dateTo={today.day}.{today.month}.{today.year}&page=2",
-                  f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
-                  f"&dateTo={today.day}.{today.month}.{today.year}&page=3",
-                  f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
-                  f"&dateTo={today.day}.{today.month}.{today.year}&page=4",
-                  f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
-                  f"&dateTo={today.day}.{today.month}.{today.year}&page=5",
-                  f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
-                  f"&dateTo={today.day}.{today.month}.{today.year}&page=6",
+                  # f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
+                  # f"&dateTo={today.day}.{today.month}.{today.year}&page=3",
+                  # f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
+                  # f"&dateTo={today.day}.{today.month}.{today.year}&page=4",
+                  # f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
+                  # f"&dateTo={today.day}.{today.month}.{today.year}&page=5",
+                  # f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
+                  # f"&dateTo={today.day}.{today.month}.{today.year}&page=6",
                   ]
 
     async def parse(self, response, **kwargs):
