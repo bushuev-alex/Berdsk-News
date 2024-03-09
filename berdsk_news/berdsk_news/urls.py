@@ -19,12 +19,24 @@ from django.urls import path, re_path, include
 from django.views.generic import RedirectView
 from django.views.static import serve
 from berdsk_news import settings
+from django.views.generic.base import TemplateView
+from django.contrib.sitemaps.views import sitemap
+from news.sitemap import StaticViewSitemap, DynamicViewNews
+
+sitemaps = {
+   'static': StaticViewSitemap,
+   'news': DynamicViewNews,
+}
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('pages/', include('django.contrib.flatpages.urls')),
     path("", include('news.urls')),
-    path("", RedirectView.as_view(url="news/")),
+    path("", RedirectView.as_view(url="news/"), name="news"),
+
+    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),
 
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
+
 ]
