@@ -136,7 +136,7 @@ class News(models.Model):
         return self.images_urls.split()
 
     def get_absolute_url(self):
-        return reverse('news_detail', args=[str(self.id)])
+        return reverse(viewname='news_by_id', args=[str(self.id)])
 
     def __str__(self):
         return f"{self.title}: {self.full_text[:20]}"
