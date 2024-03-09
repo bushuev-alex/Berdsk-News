@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
+from django.views.decorators.cache import cache_page
 
 from news.views import (MainPage,
                         DetailPage,
@@ -36,7 +37,7 @@ urlpatterns = [
     path("news/search/", redirect_to_search_result, name='to_search_result'),
     path("news/search//", lambda request: redirect("/contacts/")),
     path("news/search/<str:search_word>/", SearchListPage.as_view(), name='search_result'),
-    path("news/<int:pk>/", DetailPage.as_view(), name='news_by_id'),
+    path("news/<int:pk>/", cache_page(60*60)(DetailPage.as_view()), name='news_by_id'),
     path("news/categories/", AllCategoriesListPage.as_view(), name='categories'),
     path("news/category/<int:pk>/", CategoryListPage.as_view(), name='category'),
     path("news/tags/", AllTagsListPage.as_view(), name='tags'),
