@@ -30,7 +30,7 @@ class SibFmSpider(scrapy.Spider):
             try:
                 base_url = "https://sib.fm"
                 full_text_link: str = base_url + news.css("div.news-side__text a.text::attr('href')").get()
-                time: str = news.css("div.news-side__date::text").get()[-5:]
+                # time: str = news.css("div.news-side__date::text").get()[-5:]
                 news_info: dict = await self.get_news_info(link=full_text_link)
 
                 yield {"author": news_info.get("author"),
