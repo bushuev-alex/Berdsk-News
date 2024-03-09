@@ -14,47 +14,36 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="/news">Все новости</a></li>
-          <li class="dropdown"><a href="/news/categories/"><span>Категории</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-            <ul>
-              {% for category in categories|slice:":15" %}
-                <li><a href="/news/category/{{ category.id }}/">{{ category.name }}</a></li>
-<!--                <ul>-->
-<!--                  {% for undercat in category.name %}-->
-<!--                    <li><a href="#">{{ undercat }}</a></li>-->
-<!--                  {% endfor %}-->
-<!--                </ul>-->
-              {% endfor %}
-              </li>
-            </ul>
-          </li>
-          <li class="dropdown"><a href="/news/tags/"><span>Тэги</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-              <ul>
-                {% for tag in tags|slice:":15" %}
-                  <li><a href="/news/tag/{{ tag.id }}/">{{ tag.name }}</a></li>
-<!--                  <ul>-->
-<!--                    {% for undercat in tag.name %}-->
-<!--                      <li><a href="#">{{ undercat }}</a></li>-->
-<!--                    {% endfor %}-->
-<!--                  </ul>-->
-                {% endfor %}
-                </li>
-              </ul>
-            </li>
+
           <li class="dropdown"><a href="/news/origins/"><span>Источники</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               {% for origin in origins %}
                 <li><a href="/news/origin/{{ origin.id }}/">{{ origin.name }}</a></li>
-<!--                <ul>-->
-<!--                  {% for undercat in origin.name %}-->
-<!--                    <li><a href="#">{{ undercat }}</a></li>-->
-<!--                  {% endfor %}-->
-<!--                </ul>-->
               {% endfor %}
               </li>
             </ul>
           </li>
-<!--          <li><a href="/about/">О компании</a></li>-->
+
+          <li class="dropdown"><a href="/news/categories/"><span>Категории</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              {% for category in categories|slice:":15" %}
+                <li><a href="/news/category/{{ category.id }}/">{{ category.name }}</a></li>
+              {% endfor %}
+              </li>
+            </ul>
+          </li>
+
+          <li class="dropdown"><a href="/news/tags/"><span>Тэги</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+              <ul>
+                {% for tag in tags|slice:":15" %}
+                  <li><a href="/news/tag/{{ tag.id }}/">{{ tag.name }}</a></li>
+                {% endfor %}
+                </li>
+              </ul>
+            </li>
+
           <li><a href="/contacts/">Рекламодателям</a></li>
+
         </ul>
       </nav><!-- .navbar -->
 
