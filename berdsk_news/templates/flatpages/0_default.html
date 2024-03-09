@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load cache %}
 
-{% block head %}
-{% endblock head %}
-
+{% cache 3600 head %}
+  {% block head %}
+  {% endblock head %}
+{% endcache %}
 
 <body>
 
