@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = DJ_SCRT_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', "192.168.0.40", "212.20.45.230"]
 
@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.flatpages",
     "fpages",
-    "django_filters"
+    "django_filters",
+    'django.contrib.sitemaps'
 ]
 
 SITE_ID = 1
