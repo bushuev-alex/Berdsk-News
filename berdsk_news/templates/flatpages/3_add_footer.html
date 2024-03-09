@@ -1,4 +1,5 @@
 {% extends 'flatpages/2_add_header.html' %}
+{% load cache %}
 
 {% block footer %}
 <!-- ======= Footer ======= -->
@@ -8,6 +9,8 @@
       <div class="container">
 
         <div class="row g-5">
+
+          {% cache 3600 footer_partial %}
           <div class="col-lg-4">
             <h3 class="footer-heading">О сайте</h3>
             <p>Сайт - агрегатор новостных сайтов новосибирской области.</p>
@@ -32,6 +35,8 @@
               {% endfor %}
             </ul>
           </div>
+          {% endcache %}
+
 
           <div class="col-lg-4">
             <h3 class="footer-heading">Последние новости</h3>
