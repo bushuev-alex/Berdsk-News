@@ -38,7 +38,7 @@ class NGSSpider(scrapy.Spider):
         # 1st var: r"\\u002Ftext\\u002F\w+"\\u002F\d{4}\\u002F\d{2}\\u002F\d{2}\\u002F\d{8}",
 
         links = [url.replace("\\u002F", "/") for url in raw_urls]
-        print(links)
+        # print(links)
 
         for link in links:
             try:
@@ -46,18 +46,18 @@ class NGSSpider(scrapy.Spider):
                 news_info: dict = await self.get_news_info(link=full_text_link)
 
                 yield {"author": news_info.get("author"),
-                       "title": news_info.get("title"),  # название
-                       "brief_text": news_info.get("brief_text"),  # короткое описание
-                       "full_text": news_info.get("full_text"),  # полный текст
-                       "title_image_url": news_info.get("title_image_url"),  # изображение у заглавия
-                       "images_urls": news_info.get("images_urls"),  # строка с ссылками на фото в статье
-                       "tag_list": news_info.get("tag_list"),  # тэг - тема новости (первое слово/фраза из группы тегов)
-                       "search_words": news_info.get("search_words"),  # строка всех тегов
+                       "title": news_info.get("title"),
+                       "brief_text": news_info.get("brief_text"),
+                       "full_text": news_info.get("full_text"),
+                       "title_image_url": news_info.get("title_image_url"),
+                       "images_urls": news_info.get("images_urls"),
+                       "tag_list": news_info.get("tag_list"),
+                       "search_words": news_info.get("search_words"),
                        "category_list": news_info.get("category_list"),
-                       "parsed_from": "ngs.ru",  # название сайта
-                       "full_text_link": full_text_link,  # ссылка на полный текст
-                       "published_at": datetime.fromisoformat(news_info.get("published_at")),  # дата публикации
-                       "parsed_at": datetime.utcnow(),  # дата добавления / парсинга
+                       "parsed_from": "ngs.ru",
+                       "full_text_link": full_text_link,
+                       "published_at": datetime.fromisoformat(news_info.get("published_at")),
+                       "parsed_at": datetime.utcnow(),
                        }
             except AttributeError as e:
                 print(e, full_text_link)
