@@ -10,3 +10,4 @@ DB_PORT = os.getenv('DB_PORT')
 DB_NAME = os.getenv('DB_NAME')
 
 DJ_SCRT_KEY = os.getenv('DJ_SCRT_KEY')
+PARSER_CWD = os.getenv('PARSER_CWD')
