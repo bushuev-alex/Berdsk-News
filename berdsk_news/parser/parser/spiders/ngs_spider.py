@@ -71,14 +71,19 @@ class NGSSpider(scrapy.Spider):
 
     async def get_news_info(self, link: str) -> dict:
         res = requests.get(url=link, headers=self.headers)
+        print(res.status_code)
         if res.status_code == 200:
             soup = BeautifulSoup(res.content, 'lxml')
             title = soup.find("h1", {"itemprop": "headline"}).text
-            brief_text = soup.find("p", {"itemprop": "alternativeHeadline"}).text
-            title_image_url = soup.find("div", {"itemprop": "articleBody"}).find("img").get("src")
+            brief_text = soup.find("p", {"itemprop": "description alternativeHeadline"}).text
+            try:
+                title_image_url = soup.find("div", {"itemprop": "articleBody"}).find("img").get("src")
+            except AttributeError as e:
+                print(e)
+                title_image_url = " "
             published_at = soup.find("meta", {"itemprop": "datePublished"}).get("content")
-            author = soup.find("div", {"itemprop": "author"}).find("p", {"itemprop": "name"}).text
-            categories = soup.find("li", {"itemprop": "itemListElement"}).find("a")
+            author = soup.find("div", {"itemprop": "name"}).find("a", {"itemprop": "url"}).text
+            categories = soup.find("span", {"itemprop": "itemListElement"})  # .find("a")
             return {
                 "author": author,
                 "title": title,
@@ -92,7 +97,7 @@ class NGSSpider(scrapy.Spider):
             }
 
     async def get_all_images(self, soup: BeautifulSoup) -> str:
-        figures = soup.findAll("figure", {"itemscope": "itemscope"})
+        figures = soup.find("div", {"itemprop": "articleBody"}).findAll("picture")
         imgs = " ".join([fig.find("img").get("src") for fig in figures[1:] if fig.find("img")])
         return imgs
 
@@ -115,7 +120,7 @@ class NGSSpider(scrapy.Spider):
         for a in tags:
             try:
                 if "tags" in a.get("href"):
-                    tags_list.append(a.get("title"))
+                    tags_list.append(a.text.strip())
             except TypeError:
                 continue
         return tags_list
