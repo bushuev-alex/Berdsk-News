@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 SPIDER_NAMES = json.loads(os.getenv('SPIDER_NAMES'))
-PARSER_CWD = json.loads(os.getenv('PARSER_CWD'))
+PARSER_CWD = os.getenv('PARSER_CWD')
 
 
 
