@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 SPIDER_NAMES = json.loads(os.getenv('SPIDER_NAMES'))
+PARSER_CWD = json.loads(os.getenv('PARSER_CWD'))
 
 
 
@@ -28,7 +29,7 @@ def launch_spider(origin: str):
                                       f"-d",
                                       f"spider={spidername}",
                                       ], stdout=subprocess.PIPE,
-                                     cwd="/home/alexander/PycharmProjects/BerdskNews")
+                                     cwd=PARSER_CWD)
         print(proc_result)
         params = json.loads(proc_result.stdout)
         print(params)
