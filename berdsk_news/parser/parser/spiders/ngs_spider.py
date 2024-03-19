@@ -9,8 +9,23 @@ from datetime import datetime, timedelta
 
 class NGSSpider(scrapy.Spider):
     name: str = "ngs"
-    headers: dict = {'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
-                                   "Chrome/116.0.5845.1028 YaBrowser/23.9.1.1028 (beta) Yowser/2.5 Safari/537.36"}
+    headers: dict = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,"
+                               "image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+                     'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                                   "Chrome/120.0.0.0 YaBrowser/24.1.0.0 Safari/537.36",
+                     "Cookie": "jtnews_ab_24=A; jtnews_ab_29=A; _ym_uid=1666349083772181309; "
+                               "tildauid=1683954093151.379824; jtnews_crookie_reset=true; "
+                               "jtnews_ab_main_page_4redesign=B; adrcid=ANKX-rQDygCxFwUYJsu6oGQ; "
+                               "jtnews_a_template=true; __ddg1_=qQY8OJVC7Jc58rNkAGls; _ym_d=1698024866; "
+                               "ngs_uid=wxPcGWVgugKG//JXBNyfAg==; ngs_analytics_uid=wxPcEmVh0cxuFr/xInqoAg==; "
+                               "an_h_uid=12DC13C3CCD16165F1BF166E02A87A22; ump_ab_v1=legacy; __ddgid_=3qoHphFn2NEIYwLw; "
+                               "__ddg2_=hFDmW2Dm7FCG2ncP; ump_ab_v2=legacy; _ga_1937V52Y9V=GS1.2.1709868734.10.0.1709868734.0.0.0; "
+                               "_ga=GA1.1.403770720.1680981391; ump_ab_v3=ump; "
+                               "crookie=AyEilT4x2OQnaFh4/sInI3b+j4rRSD++pUQFpmGRRe1jVAiT/Fyvf9ZgZ/Ah7TtuyJP7FdsQ9OjxapRAGkwc8PzDuYQ=; "
+                               "cmtchd=MTcxMDY3NDg4MTIxMg; _ym_isad=1; _ym_visorc=w; __ddgmark_=eiTckPVQbpPh0Iah; "
+                               "__ddg5_=tQ8LEHSuSzebFrji; ngs_sid=985879739cadfcc7c94cd8d808bab830; "
+                               "_ga_KRPLCP05GH=GS1.1.1710879056.422.1.1710883516.0.0.0",
+                     }
 
     today = datetime.today()
     yesterday = today - timedelta(days=1)
@@ -71,7 +86,7 @@ class NGSSpider(scrapy.Spider):
 
     async def get_news_info(self, link: str) -> dict:
         res = requests.get(url=link, headers=self.headers)
-        print(res.status_code)
+        # print(res.status_code)
         if res.status_code == 200:
             soup = BeautifulSoup(res.content, 'lxml')
             title = soup.find("h1", {"itemprop": "headline"}).text
