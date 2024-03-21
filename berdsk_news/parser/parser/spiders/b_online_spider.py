@@ -39,7 +39,7 @@ class BerdskOnlineSpider(scrapy.Spider):
                        "category_list": news_info.get("category_list"),
                        "parsed_from": "berdsk-online.ru",  # название сайта
                        "full_text_link": full_text_link,  # ссылка на полный текст
-                       "published_at": datetime.fromisoformat(news_info.get("published_at")),  # дата публикации
+                       "published_at": datetime.strptime(news_info.get("published_at"), "%d.%m.%Y %H:%M"),
                        "parsed_at": datetime.utcnow(),  # дата добавления / парсинга
                        }
             except AttributeError as e:
@@ -60,7 +60,7 @@ class BerdskOnlineSpider(scrapy.Spider):
             author = soup.find("div", {"class": "field-avtor"}).find("a")
             categories = soup.find("div", {"class": "news_detail_slide_news_region"}).find('a')
             tags = soup.find("div", {"class": "tag-list"})
-            published_at = soup.find("meta", {"property": "article:modified_time"}).get("content")
+            published_at = soup.find("div", {"class": "news_detail_slide_news_date"}).text
             return {
                 "author": re.split(r"[.|,] ", author.text.strip())[0],
                 "full_text": "XYWZ".join((p.text.strip() for p in full_text_list)),
@@ -72,7 +72,7 @@ class BerdskOnlineSpider(scrapy.Spider):
 
     async def get_all_images(self, full_text_list: list) -> str:
         try:
-            figures = [p.find("img").get("src") for p in full_text_list if p.find("img")]
+            figures = [p.find("img").get("data-lazy-src-webp") for p in full_text_list if p.find("img")]
             imgs = " ".join(figures)
             return imgs
         except TypeError as e:
