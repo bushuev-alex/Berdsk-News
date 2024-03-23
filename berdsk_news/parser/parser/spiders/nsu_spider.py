@@ -30,16 +30,16 @@ class NSUSpider(scrapy.Spider):
         news_list = response.css('div.news-card')
 
         for news in news_list:
-            base_url = "https://www.nsu.ru"
+            self.base_url = "https://www.nsu.ru"
             try:
-                full_text_link: str = base_url + news.css('a::attr(href)').get()
+                full_text_link: str = self.base_url + news.css('a::attr(href)').get()
                 news_info: dict = await self.get_news_info(link=full_text_link)
 
                 yield {"author": news_info.get("author"),
                        "title": news.css('a.name::text').get(),  # название
-                       "brief_text": news.css('p::text').get(),  # короткое описание
+                       "brief_text": news.css('p::text').get().strip(),  # короткое описание
                        "full_text": news_info.get("full_text"),  # полный текст
-                       "title_image_url": news.css("a.img-wrap img::attr(src)").get(),
+                       "title_image_url": self.base_url + news.css("a.img-wrap img::attr(src)").get(),
                        "images_urls": news_info.get("images_urls"),  # список ссылок на фото в статье
                        "tag_list": news_info.get("tag_list"),  # тэг - тема новости (первое слово/фраза из группы тегов)
                        "search_words": news_info.get("search_words"),  # строка всех тегов
@@ -83,7 +83,7 @@ class NSUSpider(scrapy.Spider):
     async def get_all_images(self, soup: BeautifulSoup) -> str:
         try:
             figures = soup.find("div", {"class": "news-silder"}).findAll("div", {"class": "item"})
-            imgs = " ".join([fig.find("img").get("src") for fig in figures])
+            imgs = " ".join([self.base_url + fig.find("img").get("src") for fig in figures])
             return imgs
         except TypeError as e:
             print(e)
