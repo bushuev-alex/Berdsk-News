@@ -602,6 +602,13 @@ progress {
   height: auto;
 }
 
+.img-fluid-sidebar {
+  max-width: 95%;
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .img-thumbnail {
   padding: 0.25rem;
   background-color: #fff;
