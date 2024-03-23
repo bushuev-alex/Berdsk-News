@@ -24,7 +24,7 @@
         <div class="post-meta"><span class="date">{{ interesting.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ interesting.published_at|date:"Y M d D G:i" }}</span></div>
         <h2 class="mb-2"><a href="/news/{{ interesting.id }}">{{ interesting.title }}</a></h2>
         <div class="d-flex align-items-center author">
-            <div class="photo"><img src="{{ interesting.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid"></div>
+            <div class="photo"><img src="{{ interesting.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid-sidebar"></div>
                   <div class="name">
                     <h3 class="m-0 p-0">{{ interesting.parsed_from.name }}</h3>
                   </div>
@@ -40,7 +40,7 @@
         <div class="post-meta"><span class="date">{{ trending.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ trending.published_at|date:"Y M d D G:i" }}</span></div>
         <h2 class="mb-2"><a href="/news/{{ trending.id }}">{{ trending.title }}</a></h2>
         <div class="d-flex align-items-center author">
-            <div class="photo"><img src="{{ trending.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid"></div>
+            <div class="photo"><img src="{{ trending.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid-sidebar"></div>
                   <div class="name">
                     <h3 class="m-0 p-0">{{ trending.parsed_from.name }}</h3>
                   </div>
@@ -56,7 +56,7 @@
         <div class="post-meta"><span class="date">{{ latest.category.all.0.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ latest.published_at|date:"Y M d D G:i" }}</span></div>
         <h2 class="mb-2"><a href="/news/{{ latest.id }}">{{ latest.title }}</a></h2>
         <div class="d-flex align-items-center author">
-            <div class="photo"><img src="{{ latest.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid"></div>
+            <div class="photo"><img src="{{ latest.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid-sidebar"></div>
                   <div class="name">
                     <h3 class="m-0 p-0">{{ latest.parsed_from.name }}</h3>
                   </div>
