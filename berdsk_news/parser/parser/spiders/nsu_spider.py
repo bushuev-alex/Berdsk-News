@@ -40,7 +40,7 @@ class NSUSpider(scrapy.Spider):
                        "brief_text": news.css('p::text').get().strip(),  # короткое описание
                        "full_text": news_info.get("full_text"),  # полный текст
                        "title_image_url": self.base_url + news.css("a.img-wrap img::attr(src)").get(),
-                       "images_urls": news_info.get("images_urls"),  # список ссылок на фото в статье
+                       "images_urls": news_info.get("images_urls", ""),  # список ссылок на фото в статье
                        "tag_list": news_info.get("tag_list"),  # тэг - тема новости (первое слово/фраза из группы тегов)
                        "search_words": news_info.get("search_words"),  # строка всех тегов
                        "category_list": news_info.get("tag_list"),  # category_list = tag_list
@@ -69,13 +69,12 @@ class NSUSpider(scrapy.Spider):
                 author_ = soup.find("div", {"class": "property"}).text
                 author = " ".join(re.split(r"[ |(,)]", author_)[2:4]).strip()
             except Exception as e:
-                print(e, link)
                 author = "Пресс-служба НГУ"
 
             tags = soup.find("div", {"class": "tags"}).findAll("a", {"class": "tag-item"})
             return {
                 "author": author,
-                "full_text": "XYWZ".join([p.text.strip() for p in full_text_list]),
+                "full_text": await self.get_full_text(soup),
                 "tag_list": [tag.text.strip() for tag in tags],
                 "images_urls": await self.get_all_images(soup),
             }
@@ -89,3 +88,12 @@ class NSUSpider(scrapy.Spider):
             print(e)
         except IndexError as e:
             print(e)
+
+    async def get_full_text(self, soup: BeautifulSoup):
+        full_text_list = soup.find("div", {"class": "detail_text"}).findAll("p")
+        if full_text_list:
+            full_text = "XYWZ".join([p.text.strip() for p in full_text_list])
+        else:
+            full_text_list = soup.find("div", {"class": "detail_text"}).text.split("\n")
+            full_text = "XYWZ".join([p.strip() for p in full_text_list if p])
+        return full_text
