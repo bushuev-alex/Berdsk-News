@@ -17,12 +17,13 @@ class NSUSpider(scrapy.Spider):
                      }
 
     today = datetime.today()
+    tomorrow = today + timedelta(days=1)
     yesterday = today - timedelta(days=5)
 
     start_urls = [
         f"https://www.nsu.ru/n/media/news/"
         f"?newsFilter_DATE_ACTIVE_FROM_1={yesterday.day}.{yesterday.month}.{yesterday.year}"
-        f"&newsFilter_DATE_ACTIVE_FROM_2={today.day}.{today.month}.{today.year}"
+        f"&newsFilter_DATE_ACTIVE_FROM_2={tomorrow.day}.{tomorrow.month}.{tomorrow.year}"
         f"&set_filter=Найти&set_filter=Y"
     ]
 
