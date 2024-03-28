@@ -35,9 +35,11 @@ class MainPage(TemplateView):
         context["categories"] = Category.objects.order_by("-rating")
         context["tags"] = Tag.objects.order_by("-rating")
         context["origins"] = Origin.objects.all()
-        context["latest_news"] = News.objects.order_by("-id")[:7]
         context["advertisements"] = Advertisement.objects.all()
-        trending_news = News.objects.filter(published_at__gte=self.week_ago).order_by('-rating')[:6]
+
+        news_week_ago = News.objects.filter(published_at__gte=self.week_ago)
+        context["latest_news"] = news_week_ago.order_by("-id")[:7]
+        trending_news = news_week_ago.order_by('-rating')[:6]
         context["enum_trending_news"] = enumerate(trending_news)
         return context
 
