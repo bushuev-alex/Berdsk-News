@@ -15,7 +15,7 @@ class NSUSpider(scrapy.Spider):
                                    "Chrome/120.0.0.0 YaBrowser/24.1.0.0 Safari/537.36",
                      "sec-ch-ua-platform": "Linux",
                      }
-
+    base_url = "https://www.nsu.ru"
     today = datetime.today()
     tomorrow = today + timedelta(days=1)
     day_ago = today - timedelta(days=5)
@@ -31,9 +31,8 @@ class NSUSpider(scrapy.Spider):
         news_list = response.css('div.news-card')
 
         for news in news_list:
-            self.base_url = "https://www.nsu.ru"
             try:
-                full_text_link: str = self.base_url + news.css('a::attr(href)').get()
+                full_text_link: str = news.css('a::attr(href)').get()
                 news_info: dict = await self.get_news_info(link=full_text_link)
 
                 yield {"author": news_info.get("author"),
