@@ -33,6 +33,8 @@ class NSUSpider(scrapy.Spider):
         for news in news_list:
             try:
                 full_text_link: str = news.css('a::attr(href)').get()
+                if not full_text_link.startswith("https"):
+                    full_text_link = "https://www.nsu.ru" + full_text_link
                 news_info: dict = await self.get_news_info(link=full_text_link)
 
                 yield {"author": news_info.get("author"),
