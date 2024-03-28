@@ -18,11 +18,11 @@ class NSUSpider(scrapy.Spider):
 
     today = datetime.today()
     tomorrow = today + timedelta(days=1)
-    yesterday = today - timedelta(days=5)
+    day_ago = today - timedelta(days=5)
 
     start_urls = [
         f"https://www.nsu.ru/n/media/news/"
-        f"?newsFilter_DATE_ACTIVE_FROM_1={yesterday.day}.{yesterday.month}.{yesterday.year}"
+        f"?newsFilter_DATE_ACTIVE_FROM_1={day_ago.day}.{day_ago.month}.{day_ago.year}"
         f"&newsFilter_DATE_ACTIVE_FROM_2={tomorrow.day}.{tomorrow.month}.{tomorrow.year}"
         f"&set_filter=Найти&set_filter=Y"
     ]
@@ -64,7 +64,6 @@ class NSUSpider(scrapy.Spider):
         res = requests.get(url=link, headers=self.headers)
         if res.status_code == 200:
             soup = BeautifulSoup(res.content, 'lxml')
-            full_text_list = soup.find("div", {"class": "detail_text"}).findAll("p")
 
             try:
                 author_ = soup.find("div", {"class": "property"}).text
