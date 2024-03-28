@@ -3,7 +3,7 @@
 {% load custom_tags %}
 
 {% block categories %}
-{% for category in categories %}
+{% for category in categories|slice:"20" %}
     {% with category.id|news_by_category as news_qs %}
     <!-- ======= Category Section ======= -->
     <section class="category-section">
