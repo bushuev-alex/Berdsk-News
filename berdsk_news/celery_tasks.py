@@ -36,7 +36,7 @@ clry_spdr.conf.beat_schedule = {'launch_berdskbn_45m': {'task': 'parser.celery_f
                                                         'args': ("berdsk-online.ru",),  #
                                                         },
                                 'launch_nsu_60m': {'task': 'parser.celery_funcs.launch_spider',
-                                                   'schedule': crontab(hour="*/1"),
+                                                   'schedule': crontab(minute="*/15", hour="*/1"),
                                                    'args': ("nsu.ru",),  #
                                                    },
                                 }
