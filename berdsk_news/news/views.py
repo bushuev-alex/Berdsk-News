@@ -1,4 +1,4 @@
-import time
+# import time
 
 from django.views.generic import ListView, TemplateView  # , DetailView, CreateView, UpdateView, DeleteView,
 from django.contrib import messages
@@ -32,12 +32,12 @@ class MainPage(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all().order_by("-rating")
-        context["tags"] = Tag.objects.all().order_by("-rating")
+        context["categories"] = Category.objects.order_by("-rating")
+        context["tags"] = Tag.objects.order_by("-rating")
         context["origins"] = Origin.objects.all()
-        context["latest_news"] = News.objects.all().order_by("-id")[:7]
+        context["latest_news"] = News.objects.order_by("-id")[:7]
         context["advertisements"] = Advertisement.objects.all()
-        trending_news = News.objects.all().filter(published_at__gte=self.week_ago).order_by('-rating')[:6]
+        trending_news = News.objects.filter(published_at__gte=self.week_ago).order_by('-rating')[:6]
         context["enum_trending_news"] = enumerate(trending_news)
         return context
 
@@ -58,18 +58,18 @@ class DetailPage(TemplateView):
         context = super().get_context_data(**kwargs)
         context["single_news"] = News.objects.get(id=pk)
         # context["comments"] = Comment.objects.filter(news_id=pk)  # .order_by("id")
-        context["categories"] = Category.objects.all().order_by("-rating")[:15]
-        context["tags"] = Tag.objects.all().order_by("name", "-rating")[:15]
-        context["origins"] = Origin.objects.all().order_by("id", "-rating")
+        context["categories"] = Category.objects.order_by("-rating")[:15]
+        context["tags"] = Tag.objects.order_by("name", "-rating")[:15]
+        context["origins"] = Origin.objects.order_by("id", "-rating")
 
-        latest_news = News.objects.all().order_by("-published_at")[:6]
+        latest_news = News.objects.order_by("-published_at")[:6]
         context["latest_news"] = latest_news
         context["enum_latest_news"] = enumerate(latest_news)
 
-        trending_news = News.objects.all().filter(published_at__gte=self.week_ago).order_by('-rating')[:6]
+        trending_news = News.objects.filter(published_at__gte=self.week_ago).order_by('-rating')[:6]
         context["enum_trending_news"] = enumerate(trending_news)
 
-        interesting_news = News.objects.all().order_by('-rating')[:6]
+        interesting_news = News.objects.order_by('-rating')[:6]
         context["enum_interesting_news"] = enumerate(interesting_news)
 
         return context
@@ -83,13 +83,13 @@ class BaseListPage(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context["categories"] = Category.objects.all().order_by("-rating")
-        context["tags"] = Tag.objects.all().order_by("-rating")[:15]
-        context["origins"] = Origin.objects.all().order_by("id")
+        context["categories"] = Category.objects.order_by("-rating")
+        context["tags"] = Tag.objects.order_by("-rating")[:15]
+        context["origins"] = Origin.objects.order_by("id")
 
-        context["latest_news"] = News.objects.all().order_by("-published_at")[:6]
-        context["trending_news"] = News.objects.all().filter(published_at__gte=self.week_ago).order_by('-rating')[:6]
-        context["interesting_news"] = News.objects.all().order_by('-rating')[:6]
+        context["latest_news"] = News.objects.order_by("-published_at")[:6]
+        context["trending_news"] = News.objects.filter(published_at__gte=self.week_ago).order_by('-rating')[:6]
+        context["interesting_news"] = News.objects.order_by('-rating')[:6]
 
         return context
 
@@ -114,7 +114,7 @@ class AllCategoriesListPage(TemplateView):
         context["tags"] = Tag.objects.all()
         context["categories"] = Category.objects.all()
         context["origins"] = Origin.objects.all()
-        context["latest_news"] = News.objects.all().order_by("-id")[:7]
+        context["latest_news"] = News.objects.order_by("-id")[:7]
         return context
 
 
@@ -138,7 +138,7 @@ class AllTagsListPage(TemplateView):
         context["tags"] = Tag.objects.all()
         context["categories"] = Category.objects.all()
         context["origins"] = Origin.objects.all()
-        context["latest_news"] = News.objects.all().order_by("-id")[:7]
+        context["latest_news"] = News.objects.order_by("-id")[:7]
         return context
 
 
@@ -162,7 +162,7 @@ class AllOriginsListPage(TemplateView):
         context["tags"] = Tag.objects.all()
         context["categories"] = Category.objects.all()
         context["origins"] = Origin.objects.all()
-        context["latest_news"] = News.objects.all().order_by("-id")[:7]
+        context["latest_news"] = News.objects.order_by("-id")[:7]
         return context
 
 
@@ -171,10 +171,10 @@ class ContactPage(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all().order_by("-rating")
+        context["categories"] = Category.objects.order_by("-rating")
         context["origins"] = Origin.objects.all()
         context["tags"] = Tag.objects.all()
-        context["latest_news"] = News.objects.all().order_by("-id")[:7]
+        context["latest_news"] = News.objects.order_by("-id")[:7]
         return context
 
     def post(self, request, *args, **kwargs):
@@ -198,7 +198,7 @@ class About(TemplateView):
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.all().order_by("-rating")
         context["origins"] = Origin.objects.all()
-        context["latest_news"] = News.objects.all().order_by("-id")[:7]
+        context["latest_news"] = News.objects.order_by("-id")[:7]
         return context
 
 
