@@ -183,7 +183,7 @@ class ContactPage(TemplateView):
         form = AdForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(self.request, message="Ваше сообщение отправлено. Спасибо!")  # HttpResponse("Ваше сообщение отправлено. Спасибо!")
+            messages.success(self.request, message="Ваше сообщение отправлено. Спасибо!")
             return HttpResponseRedirect("/contacts")
         else:
             print(form.cleaned_data)
