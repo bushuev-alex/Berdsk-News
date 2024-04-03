@@ -1,5 +1,6 @@
 {% extends 'flatpages/index/4_add_categories.html' %}
 {% load cache %}
+{% load static %}
 
 {% block adsvertisement %}
     <section id="hero-slider" class="hero-slider">
@@ -14,10 +15,10 @@
                         {% for image_url in ad.get_images_urls %}
                         <div class="swiper-slide">
                             <div class="row-bg-12">
-                              <a href="{{ ad.link }}" class="img-reclame d-flex align-items-end" style="background-image: url({{ image_url }});" target="_blank">
+                              <a href="/contacts/" class="img-reclame d-flex align-items-end" style="background-image: url({% static 'img/place_here_your_reklame.png' %});" target="_blank">
                                                             <div class="img-bg-inner">
-                                                              <h2>{{ ad.name }}</h2>
-                                                              <p>{{ ad.description }}</p>
+<!--                                                              <h2>{{ ad.name }}</h2>-->
+<!--                                                              <p>{{ ad.description }}</p>-->
                                                               </div>
                               </a>
                             </div>
