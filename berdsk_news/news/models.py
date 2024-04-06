@@ -1,6 +1,7 @@
 from django.db import models
 # from django.contrib.auth.models import User
 from django.urls import reverse
+from berdsk_news.settings import PARTIAL_CONTENT
 # import pytz
 # from datetime import datetime
 # from django.utils.translation import gettext
@@ -123,11 +124,11 @@ class News(models.Model):
             return self.full_text[:len(self.text)]
         return self.full_text[:124] + "..."
 
-    def split_by_XYWZ(self):
-        res: list[str] = self.full_text.split('XYWZ')
-        if res[-1].startswith("Ранее мы"):
-            return res[:-1]
-        return res
+    def split_by_XYWZ(self) -> list[str]:
+        if PARTIAL_CONTENT:
+            partial_text_len = len(self.full_text) // 3
+            return self.full_text[:partial_text_len].split('XYWZ')
+        return self.full_text.split('XYWZ')
 
     def replace_XYWZ(self):
         return self.full_text.replace("XYWZ", " ")[:50]
