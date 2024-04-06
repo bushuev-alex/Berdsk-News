@@ -40,14 +40,26 @@
                   <a href="{{ news_qs.1.id }}"><img src="{{ news_qs.1.title_image_url }}" loading="lazy" alt="" class="img-fluid"></a>
                   <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.1.published_at|date:"Y M d D G:i" }}</span></div>
                   <h2 class="mb-2"><a href="{{ news_qs.1.id }}">{{ news_qs.1.title }}</a></h2>
-                  <span class="author mb-3 d-block">{{ news_qs.1.parsed_from.name }} </span>
+<!--                  <span class="author mb-3 d-block">{{ news_qs.1.parsed_from.name }} </span>-->
+                  <div class="d-flex align-items-center author">
+                  <div class="photo"><img src="{{ news_qs.1.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid-sidebar"></div>
+                  <div class="name">
+                    <h3 class="m-0 p-0">{{ news_qs.1.parsed_from.name }}</h3>
+                  </div>
+                </div>
                   <p class="mb-4 d-block">{{ news_qs.1.brief_text|truncatewords:20 }}</p>
                 </div>
 
                 <div class="post-entry-1">
                   <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.2.published_at|date:"Y M d D G:i" }}</span></div>
                   <h2 class="mb-2"><a href="{{ news_qs.2.id }}">{{ news_qs.2.title }}</a></h2>
-                  <span class="author mb-3 d-block">{{ news_qs.2.parsed_from.name }}</span>
+<!--                  <span class="author mb-3 d-block">{{ news_qs.2.parsed_from.name }}</span>-->
+                  <div class="d-flex align-items-center author">
+                  <div class="photo"><img src="{{ news_qs.2.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid-sidebar"></div>
+                  <div class="name">
+                    <h3 class="m-0 p-0">{{ news_qs.2.parsed_from.name }}</h3>
+                  </div>
+                </div>
                 </div>
               </div>
               <div class="col-lg-8">
@@ -55,7 +67,13 @@
                   <a href="{{ news_qs.3.id }}"><img src="{{ news_qs.3.title_image_url }}" loading="lazy" alt="" class="img-fluid"></a>
                   <div class="post-meta"><span class="date">{{ category.name }}</span> <span class="mx-1">&bullet;</span> <span>{{ news_qs.3.published_at|date:"Y M d D G:i" }}</span></div>
                   <h2 class="mb-2"><a href="{{ news_qs.3.id }}">{{ news_qs.3.title }}</a></h2>
-                  <span class="author mb-3 d-block">{{ news_qs.3.parsed_from.name }} </span>
+<!--                  <span class="author mb-3 d-block">{{ news_qs.3.parsed_from.name }} </span>-->
+                  <div class="d-flex align-items-center author">
+                  <div class="photo"><img src="{{ news_qs.3.parsed_from.icon_url }}" loading="lazy" alt="" class="img-fluid-sidebar"></div>
+                  <div class="name">
+                    <h3 class="m-0 p-0">{{ news_qs.3.parsed_from.name }}</h3>
+                  </div>
+                </div>
                   <p class="mb-4 d-block">{{ news_qs.3.brief_text|truncatewords:20 }}</p>
                 </div>
               </div>
