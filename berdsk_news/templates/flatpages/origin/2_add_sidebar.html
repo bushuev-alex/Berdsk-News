@@ -83,7 +83,7 @@
 <div class="aside-block">
   <h3 class="aside-title">Категории</h3>
   <ul class="aside-links list-unstyled">
-    {% for category in categories %}
+    {% for category in categories|slice:":15" %}
       <li><a href="/news/category/{{ category.id }}"><i class="bi bi-chevron-right"></i> {{ category.name }}</a></li>
     {% endfor %}
   </ul>
