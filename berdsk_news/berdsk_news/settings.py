@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from berdsk_news.logging import LOGGING
-from config import DJ_SCRT_KEY, DB_HOST, DB_PORT, DB_PASS, DB_NAME, DB_LOGIN
+from config import DJ_SCRT_KEY, DB_HOST, DB_PORT, DB_PASS, DB_NAME, DB_LOGIN, EMAIL_PSWD
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     "django.contrib.flatpages",
     "fpages",
     "django_filters",
-    'django.contrib.sitemaps'
+    'django.contrib.sitemaps',
+    "django_apscheduler",
 ]
 
 SITE_ID = 1
@@ -150,3 +151,21 @@ CACHES = {'default': {'BACKEND': 'django.core.cache.backends.filebased.FileBased
 LOGGING = LOGGING
 
 PARTIAL_CONTENT = False
+
+
+EMAIL_HOST = 'smtp.mail.ru'  # адрес сервера Яндекс-почты для всех один и тот же
+EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = 'bushuev-alex'  # ваше имя пользователя, например, если ваша почта user@yandex.ru,
+# то сюда надо писать user, иными словами, это всё то что идёт до собаки
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + "@mail.ru"
+EMAIL_HOST_PASSWORD = EMAIL_PSWD  # пароль от почты
+EMAIL_USE_SSL = True
+
+
+# CELERY SETTINGS
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
