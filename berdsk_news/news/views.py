@@ -4,6 +4,7 @@ from django.views.generic import ListView, TemplateView  # , DetailView, CreateV
 from django.contrib import messages
 from django.shortcuts import render, reverse, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse  # Http404
+from news.signals import notify_new_form_submission
 
 # from django.shortcuts import render
 # from django.template.loader import render_to_string
@@ -182,7 +183,8 @@ class ContactPage(TemplateView):
     def post(self, request, *args, **kwargs):
         form = AdForm(request.POST)
         if form.is_valid():
-            form.save()
+            advertiser = form.save(commit=True)
+            notify_new_form_submission(advertiser.pk)
             messages.success(self.request, message="Ваше сообщение отправлено. Спасибо!")
             return HttpResponseRedirect("/contacts")
         else:
