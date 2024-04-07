@@ -13,7 +13,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from berdsk_news.logging import LOGGING
-from config import DJ_SCRT_KEY, DB_HOST, DB_PORT, DB_PASS, DB_NAME, DB_LOGIN, EMAIL_PSWD
+from config import DJ_SCRT_KEY, DB_HOST, DB_PORT, DB_PASS, DB_NAME, DB_LOGIN
+from config import EMAIL_HOST, EMAIL_PORT, EMAIL_PSWD, EMAIL_USE_TLS, EMAIL_USE_SSL, EMAIL_HOST_USER, EMAIL_HOST_BOX
+from config import (CELERY_BROKER_URL, CELERY_ACCEPT_CONTENT,
+                    CELERY_RESULT_BACKEND, CELERY_RESULT_SERIALIZER, CELERY_TASK_SERIALIZER)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -153,19 +156,19 @@ LOGGING = LOGGING
 PARTIAL_CONTENT = False
 
 
-EMAIL_HOST = 'smtp.mail.ru'  # адрес сервера Яндекс-почты для всех один и тот же
-EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
-EMAIL_USE_TLS = False
-EMAIL_HOST_USER = 'bushuev-alex'  # ваше имя пользователя, например, если ваша почта user@yandex.ru,
+EMAIL_HOST = EMAIL_HOST  # адрес сервера Яндекс-почты для всех один и тот же
+EMAIL_PORT = EMAIL_PORT  # порт smtp сервера тоже одинаковый
+EMAIL_USE_TLS = EMAIL_USE_TLS
+EMAIL_HOST_USER = EMAIL_HOST_USER  # ваше имя пользователя, например, если ваша почта user@yandex.ru,
 # то сюда надо писать user, иными словами, это всё то что идёт до собаки
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + "@mail.ru"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + EMAIL_HOST_BOX
 EMAIL_HOST_PASSWORD = EMAIL_PSWD  # пароль от почты
-EMAIL_USE_SSL = True
+EMAIL_USE_SSL = EMAIL_USE_SSL
 
 
 # CELERY SETTINGS
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+CELERY_BROKER_URL = CELERY_BROKER_URL
+CELERY_RESULT_BACKEND = CELERY_RESULT_BACKEND
+CELERY_ACCEPT_CONTENT = [CELERY_ACCEPT_CONTENT]
+CELERY_TASK_SERIALIZER = CELERY_TASK_SERIALIZER
+CELERY_RESULT_SERIALIZER = CELERY_RESULT_SERIALIZER
