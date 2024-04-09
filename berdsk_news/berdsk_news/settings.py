@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 from berdsk_news.logging import LOGGING
 from config import DJ_SCRT_KEY, DB_HOST, DB_PORT, DB_PASS, DB_NAME, DB_LOGIN
-from config import EMAIL_HOST, EMAIL_PORT, EMAIL_PSWD, EMAIL_USE_TLS, EMAIL_USE_SSL, EMAIL_HOST_USER, EMAIL_HOST_BOX
+from config import EMAIL_HOST, EMAIL_PORT, EMAIL_PSWD, EMAIL_HOST_USER, EMAIL_HOST_BOX  # EMAIL_USE_TLS, EMAIL_USE_SSL
 from config import (CELERY_BROKER_URL, CELERY_ACCEPT_CONTENT,
                     CELERY_RESULT_BACKEND, CELERY_RESULT_SERIALIZER, CELERY_TASK_SERIALIZER)
 
@@ -158,12 +158,12 @@ PARTIAL_CONTENT = False
 
 EMAIL_HOST = EMAIL_HOST  # адрес сервера Яндекс-почты для всех один и тот же
 EMAIL_PORT = EMAIL_PORT  # порт smtp сервера тоже одинаковый
-EMAIL_USE_TLS = EMAIL_USE_TLS
+EMAIL_USE_TLS = False
 EMAIL_HOST_USER = EMAIL_HOST_USER  # ваше имя пользователя, например, если ваша почта user@yandex.ru,
 # то сюда надо писать user, иными словами, это всё то что идёт до собаки
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER + EMAIL_HOST_BOX
 EMAIL_HOST_PASSWORD = EMAIL_PSWD  # пароль от почты
-EMAIL_USE_SSL = EMAIL_USE_SSL
+EMAIL_USE_SSL = True
 
 
 # CELERY SETTINGS
