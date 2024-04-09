@@ -16,6 +16,7 @@
     <span>{{ single_news.published_at|date:"Y M d D G:i" }}</span>
   </div>
   <h1 class="mb-5">{{ single_news.title }}</h1>
+  <h5 class="mb-5">Автор: {{ single_news.author.first_name }} {{ single_news.author.last_name }}</h5>
 
   <figure class="my-4">
     <img src="{{ single_news.title_image_url }}" alt="" class="img-fluid">
@@ -37,7 +38,7 @@
   <div class="d-flex align-items-center author">
     <div class="photo"><img src="{{ single_news.parsed_from.icon_url }}" alt="" class="img-fluid"></div>
       <div class="name">
-        <h3 class="m-0 p-0"><a href="{{ single_news.full_text_link }}" target="_blank">Читать в источнике {{ single_news.parsed_from.name }}</a> </h3>
+        <h3 class="m-0 p-0"><a href="{{ single_news.full_text_link }}" target="_blank">Читать в источнике: {{ single_news.parsed_from.name }}</a> </h3>
       </div>
   </div>
 
