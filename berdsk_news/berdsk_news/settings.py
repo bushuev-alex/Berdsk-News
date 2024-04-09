@@ -30,7 +30,8 @@ SECRET_KEY = DJ_SCRT_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', "192.168.0.40", "212.20.45.230"]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', "192.168.0.28", "212.20.45.230", "localhost", "0.0.0.0",
+                 "nso-news.ru", "www.nso-news.ru"]
 
 # Application definition
 
