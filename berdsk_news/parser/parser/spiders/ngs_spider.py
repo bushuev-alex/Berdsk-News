@@ -32,8 +32,8 @@ class NGSSpider(scrapy.Spider):
 
     start_urls = [f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
                   f"&dateTo={today.day}.{today.month}.{today.year}&page=1",
-                  f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
-                  f"&dateTo={today.day}.{today.month}.{today.year}&page=2",
+                  # f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
+                  # f"&dateTo={today.day}.{today.month}.{today.year}&page=2",
                   # f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
                   # f"&dateTo={today.day}.{today.month}.{today.year}&page=3",
                   # f"https://ngs.ru/text/?dateFrom={yesterday.day}.{yesterday.month}.{yesterday.year}"
