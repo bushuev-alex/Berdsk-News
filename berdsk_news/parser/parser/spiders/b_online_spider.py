@@ -13,7 +13,7 @@ class BerdskOnlineSpider(scrapy.Spider):
                                    "Chrome/116.0.5845.1028 YaBrowser/23.9.1.1028 (beta) Yowser/2.5 Safari/537.36"}
 
     today = datetime.today()
-    yesterday = today - timedelta(days=3)
+    yesterday = today - timedelta(days=2)
 
     start_urls = [f"https://berdsk-online.ru/news/?date-start={yesterday.year}-{yesterday.month}-{yesterday.day}"
                   f"&date-finish={today.year}-{today.month}-{today.day}",
