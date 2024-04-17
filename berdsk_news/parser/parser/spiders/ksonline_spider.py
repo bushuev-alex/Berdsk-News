@@ -12,8 +12,8 @@ class KSOnlineSpider(scrapy.Spider):
     headers: dict = {'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) "
                                    "Chrome/116.0.5845.1028 YaBrowser/23.9.1.1028 (beta) Yowser/2.5 Safari/537.36"}
 
-    start_urls = ["https://ksonline.ru/category/news//",
-                  "https://ksonline.ru/category/news/page/2/",
+    start_urls = ["https://ksonline.ru/category/news/",
+                  # "https://ksonline.ru/category/news/page/2/",
                   # "https://ksonline.ru/category/news/page/3/",
                   ]
 
