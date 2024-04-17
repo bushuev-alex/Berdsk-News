@@ -18,7 +18,7 @@ class NSUSpider(scrapy.Spider):
     base_url = "https://www.nsu.ru"
     today = datetime.today()
     tomorrow = today + timedelta(days=1)
-    day_ago = today - timedelta(days=5)
+    day_ago = today - timedelta(days=3)
 
     start_urls = [
         f"https://www.nsu.ru/n/media/news/"
