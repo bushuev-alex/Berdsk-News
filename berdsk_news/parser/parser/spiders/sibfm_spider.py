@@ -68,13 +68,21 @@ class SibFmSpider(scrapy.Spider):
             full_text_list: list[soup] = soup.find("div", {"class": "content-article__text"}).findAll("p")
             title_image_url = soup.find("div", {"class": "header-article__image"}).find("img").get("src")
             author = soup.find("p", {"class": "author-text"}).find("a")
-            categories = soup.find("div", {"class": "header-article__tags"}).find("a")
             return {
                 "author": author.text.strip().split("\n")[0],
                 "brief_text": full_text_list[0].text,
                 "full_text": "XYWZ".join((p.text.strip() for p in full_text_list[1:])),
                 "title_image_url": title_image_url,
-                "category_list": [categories.text.strip().capitalize()],
+                "category_list": self.get_category_list(soup),
                 "images_urls": " ",
                 "published_at": script_content_.get("datePublished"),
             }
+
+    async def get_category_list(self, soup: BeautifulSoup) -> list:
+        categories = soup.find("div", {"class": "header-article__tags"}).find("a")
+        category_list = [categories.text.strip().capitalize()]
+        if "Проиcшествия" in category_list:
+            return ["Происшествия"]
+        return category_list
+
+
