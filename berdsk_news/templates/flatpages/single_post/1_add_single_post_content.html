@@ -31,9 +31,16 @@
   </figure>
 
   {% for p in single_news.split_by_XYWZ %}
-    {% if 'Ранее мы' not in p and 'Напомним, что' not in p and 'Ранее НГС' not in p and 'Также напомним, что' not in p and 'Ранее «Континент Сибирь»' not in p %}
-    <p>{{ p }}</p>
-    {% endif %}
+
+      {% if 'Ранее мы' not in p and 'Напомним, что' not in p and 'Ранее НГС' not in p and 'Также напомним, что' not in p and 'Ранее «Континент Сибирь»' not in p %}
+      <p>{{ p }}</p>
+      {% endif %}
+
+      {% if forloop.counter == 3 or forloop.counter == 6 or forloop.counter == 9 or forloop.last %}
+        {% block advertisement %}
+        {% endblock %}
+      {% endif %}
+
   {% endfor %}
 
   {% for photo in single_news.split_photo_urls %}

@@ -1,0 +1,36 @@
+{% extends 'flatpages/single_post/4_add_sidebar.html' %}
+{% load cache %}
+{% load static %}
+
+{% block advertisement %}
+    <section id="hero-slider" class="hero-slider">
+      <div class="container-md" data-aos="fade-in">
+        <div class="row">
+        {% for ad in advertisements|slice:"2" %}
+
+            <div class="col-md-5">
+
+                <div class="swiper sliderFeaturedPosts">
+                    <div class="swiper-wrapper">
+                        {% for image_url in ad.get_images_urls %}
+                        <div class="swiper-slide">
+                            <div class="row-bg-12">
+                              <a href="{{ ad.link }}" class="img-reclame d-flex align-items-end" style="background-image: url({% static image_url %});" target="_blank">
+                                                            <div class="img-bg-inner">
+<!--                                                              <h2>{{ ad.name }}</h2>-->
+<!--                                                              <p>{{ ad.description }}</p>-->
+                                                              </div>
+                              </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+        </div>
+      </div>
+    </section><!-- End Hero Slider Section -->
+{% endblock %}
