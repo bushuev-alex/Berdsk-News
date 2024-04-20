@@ -15,7 +15,7 @@
                         {% for image_url in ad.get_images_urls %}
                         <div class="swiper-slide">
                             <div class="row-bg-12">
-                              <a href="/contacts/" class="img-reclame d-flex align-items-end" style="background-image: url({% static 'img/place_here_your_reklame.png' %});" target="_blank">
+                              <a href="/contacts/" class="img-reclame d-flex align-items-end" style="background-image: url({% static image_url %});" target="_blank">
                                                             <div class="img-bg-inner">
 <!--                                                              <h2>{{ ad.name }}</h2>-->
 <!--                                                              <p>{{ ad.description }}</p>-->
