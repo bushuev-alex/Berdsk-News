@@ -29,16 +29,18 @@ from news.forms import AdForm
 
 class MainPage(TemplateView):
     template_name = 'flatpages/index/index.html'
-    week_ago = datetime.now() - timedelta(days=7)
 
     def get_context_data(self, **kwargs):
+        week_ago = datetime.now() - timedelta(days=7)
+        # month_ago = datetime.now() - timedelta(days=31)
+
         context = super().get_context_data(**kwargs)
         context["categories"] = Category.objects.order_by("-rating")
         context["tags"] = Tag.objects.order_by("-rating")
         context["origins"] = Origin.objects.all()
         context["advertisements"] = Advertisement.objects.all()
 
-        news_week_ago = News.objects.filter(published_at__gte=self.week_ago)
+        news_week_ago = News.objects.filter(published_at__gte=week_ago)
         context["latest_news"] = news_week_ago.order_by("-id")[:7]
         trending_news = news_week_ago.order_by('-rating')[:6]
         context["enum_trending_news"] = enumerate(trending_news)
@@ -47,32 +49,32 @@ class MainPage(TemplateView):
 
 class DetailPage(TemplateView):
     template_name = 'flatpages/single_post/single-post.html'
-    week_ago = datetime.now() - timedelta(days=7)
-
-    # def get(self):
-    #     pass
 
     def get_context_data(self, **kwargs):
-        try:
-            pk = kwargs['pk']
-            News.objects.get(id=pk)
-        except News.DoesNotExist:
-            pk = News.objects.latest("pk").id
+        # try:
+        #     pk = kwargs['pk']
+        #     News.objects.get(id=pk)
+        # except News.DoesNotExist:
+        #     pk = News.objects.latest("pk").id
+        week_ago = datetime.now() - timedelta(days=7)
+        month_ago = datetime.now() - timedelta(days=31)
+        pk = kwargs['pk']
         context = super().get_context_data(**kwargs)
         context["single_news"] = News.objects.get(id=pk)
         # context["comments"] = Comment.objects.filter(news_id=pk)  # .order_by("id")
         context["categories"] = Category.objects.order_by("-rating")[:15]
         context["tags"] = Tag.objects.order_by("name", "-rating")[:15]
         context["origins"] = Origin.objects.order_by("id", "-rating")
+        context["advertisements"] = Advertisement.objects.all()
 
         latest_news = News.objects.order_by("-published_at")[:6]
         context["latest_news"] = latest_news
         context["enum_latest_news"] = enumerate(latest_news)
 
-        trending_news = News.objects.filter(published_at__gte=self.week_ago).order_by('-rating')[:6]
+        trending_news = News.objects.filter(published_at__gte=week_ago).order_by('-rating')[:6]
         context["enum_trending_news"] = enumerate(trending_news)
 
-        interesting_news = News.objects.order_by('-rating')[:6]
+        interesting_news = News.objects.filter(published_at__gte=month_ago).order_by('-rating')[:6]
         context["enum_interesting_news"] = enumerate(interesting_news)
 
         return context
@@ -81,9 +83,10 @@ class DetailPage(TemplateView):
 class BaseListPage(ListView):
     context_object_name = "news_list"
     paginate_by = 10
-    week_ago = datetime.now() - timedelta(days=7)
 
     def get_context_data(self, **kwargs):
+        week_ago = datetime.now() - timedelta(days=7)
+        month_ago = datetime.now() - timedelta(days=31)
         context = super().get_context_data(**kwargs)
 
         context["categories"] = Category.objects.order_by("-rating")[:15]
@@ -91,8 +94,8 @@ class BaseListPage(ListView):
         context["origins"] = Origin.objects.order_by("id")
 
         context["latest_news"] = News.objects.order_by("-published_at")[:6]
-        context["trending_news"] = News.objects.filter(published_at__gte=self.week_ago).order_by('-rating')[:6]
-        context["interesting_news"] = News.objects.order_by('-rating')[:6]
+        context["trending_news"] = News.objects.filter(published_at__gte=week_ago).order_by('-rating')[:6]
+        context["interesting_news"] = News.objects.filter(published_at__gte=month_ago).order_by('-rating')[:6]
 
         return context
 
