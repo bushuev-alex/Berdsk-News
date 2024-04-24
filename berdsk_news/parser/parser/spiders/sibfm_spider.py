@@ -73,7 +73,7 @@ class SibFmSpider(scrapy.Spider):
                 "brief_text": full_text_list[0].text,
                 "full_text": "XYWZ".join((p.text.strip() for p in full_text_list[1:])),
                 "title_image_url": title_image_url,
-                "category_list": self.get_category_list(soup),
+                "category_list": await self.get_category_list(soup),
                 "images_urls": " ",
                 "published_at": script_content_.get("datePublished"),
             }
