@@ -45,7 +45,7 @@ class NGSSpider(scrapy.Spider):
                   ]
 
     async def parse(self, response, **kwargs):
-        target_script_content = response.css("script")[39].get()
+        target_script_content = response.css("script")[36].get()
         raw_urls: list[str] = re.findall(
             pattern=r"urlCanonical\":\"(https:\\u002F\\u002Fngs.ru\\u002F"
                     r"text\\u002F\w+\\u002F\d{4}\\u002F\d{2}\\u002F\d{2}\\u002F\d{8}\\u002F)\",",
